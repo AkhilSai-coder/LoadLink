@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Road GPS Tracking — LoadLink</title>
+<script>
+  try {
+    const t = localStorage.getItem('loadlink_theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<!-- Leaflet Interactive Maps -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+</head>
+<body>
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="mark"><span>LL</span></span> <span class="brand-text">Load<b>Link</b></span>
+    </a>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Log in</a></li>
+    </ul>
+    <div class="nav-user">
+      <button class="theme-toggle-btn" id="trackThemeToggle" type="button" aria-label="Toggle Theme">🌙 Dark</button>
+      <a class="btn btn-primary btn-sm" href="register.html">Get started</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">&#9776;</button>
+  </div>
+</nav>
+
+<div class="container" style="max-width:960px; padding-top:var(--space-4); padding-bottom:var(--space-5);">
+  
+  <!-- Role Perspective Switcher Bar -->
+  <div class="panel mb-3" style="background:var(--asphalt-2); border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-m); padding:.8rem 1rem;">
+    <div class="flex-between" style="gap:.6rem; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:.5rem;">
+        <span style="font-size:.75rem; color:#8A93A0; text-transform:uppercase; font-family:var(--mono);">View As:</span>
+        <span id="currentRoleBadge" class="dash-role-badge" style="background:var(--highway); color:var(--asphalt); font-weight:700;">Loading...</span>
+      </div>
+      <div style="display:flex; gap:.4rem; flex-wrap:wrap;" id="roleSwitchButtons">
+        <button type="button" class="btn btn-sm btn-outline role-switch-btn" data-role="admin" style="font-size:.78rem; padding:3px 9px;">🛡️ Admin / Manager</button>
+        <button type="button" class="btn btn-sm btn-outline role-switch-btn" data-role="driver" style="font-size:.78rem; padding:3px 9px;">🚚 Truck Driver</button>
+        <button type="button" class="btn btn-sm btn-outline role-switch-btn" data-role="customer" style="font-size:.78rem; padding:3px 9px;">📦 Customer (Sender)</button>
+        <button type="button" class="btn btn-sm btn-outline role-switch-btn" data-role="public" style="font-size:.78rem; padding:3px 9px;">🔍 Anyone (Public)</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="roleDashboardSection" class="mb-3"></div>
+
+  <form id="trackForm" class="rf-track-form mt-2">
+    <input id="consignmentInput" placeholder="Enter Tracking Number (e.g. RF-2026-005001)" autocomplete="off">
+    <button class="btn btn-primary" type="submit">Track Now</button>
+  </form>
+  <div class="mt-2 text-soft" style="font-size:.82rem;" id="quickDemoLinks">
+    Try live demo IDs: 
+    <a href="#" onclick="quickTrack('RF-2026-005001'); return false;" style="color:var(--milestone); font-weight:600; font-family:var(--mono); margin-right:8px;">RF-2026-005001 (Nagpur &#8596; Mumbai)</a>
+    <a href="#" onclick="quickTrack('RF-2026-498231'); return false;" style="color:var(--milestone); font-weight:600; font-family:var(--mono);">RF-2026-498231 (Vijayawada &#8596; Hyd)</a>
+  </div>
+
+  <div id="trackResult" class="mt-4"></div>
+</div>
+
+<!-- Leaflet.js -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="js/apiClient.js"></script>
+<script src="js/mockApi.js"></script>
+<script src="js/main.js"></script>
+<script src="track.js"></script>
+<script>
+  function quickTrack(id) {
+    document.getElementById('consignmentInput').value = id;
+    if (window.renderTrack) window.renderTrack(id);
+  }
+  document.getElementById('hamburgerBtn').addEventListener('click', () => {
+    document.getElementById('navlinks').classList.toggle('open');
+  });
+  const trackThemeBtn = document.getElementById('trackThemeToggle');
+  if (trackThemeBtn) {
+    function updateThemeBtn() {
+      trackThemeBtn.innerHTML = UI.getTheme() === 'dark' ? '☀️ Light' : '🌙 Dark';
+    }
+    updateThemeBtn();
+    trackThemeBtn.addEventListener('click', () => {
+      UI.toggleTheme();
+      updateThemeBtn();
+    });
+  }
+</script>
+</body>
+</html>

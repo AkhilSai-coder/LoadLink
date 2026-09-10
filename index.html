@@ -1,0 +1,1960 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>LoadLink &mdash; “Don’t create another trip. Fill the empty one.”</title>
+<meta name="description" content="Bharat's backhaul freight network. Book empty returning trucks, save up to 35% on shipping, and track deliveries with live GPS on your phone.">
+<script>
+  try {
+    const t = localStorage.getItem('loadlink_theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ============================================================
+   PERFECT LAPTOP & MOBILE RESPONSIVE DESIGN (LIGHT & YELLOW)
+   ============================================================ */
+:root {
+  --asphalt:      #111827;
+  --asphalt-2:    #1F2937;
+  --concrete:     #F3F4F6;
+  --concrete-2:   #E5E7EB;
+  --paper:        #FDFCF9;
+  --panel-white:  #FFFFFF;
+  --highway:      #F5B700;
+  --highway-dark: #D97706;
+  --highway-glow: rgba(245, 183, 0, 0.28);
+  --highway-light:#FFFBEB;
+  --highway-border:#FCD34D;
+  --milestone:    #EA580C;
+  --steel:        #4B5563;
+  --steel-dim:    #6B7280;
+  --signal:       #059669;
+  --signal-soft:  #D1FAE5;
+
+  --display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body:    'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono:    'IBM Plex Mono', monospace;
+
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 22px;
+}
+
+[data-theme="dark"] {
+  --paper:             #0B0E14;
+  --panel-white:       #161B22;
+  --concrete:          #1A202C;
+  --concrete-2:        #2D3748;
+  --asphalt:           #F3F4F6;
+  --asphalt-2:         #E5E7EB;
+  --steel:             #9CA3AF;
+  --steel-dim:         #6B7280;
+  --highway-light:     rgba(245, 183, 0, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--body);
+  background: var(--paper);
+  background-image:
+    radial-gradient(circle at 10% 12%, rgba(245, 183, 0, 0.07) 0%, transparent 35%),
+    radial-gradient(circle at 90% 85%, rgba(245, 183, 0, 0.05) 0%, transparent 40%);
+  color: var(--asphalt);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  padding-bottom: 74px; /* Space for mobile sticky action bar */
+}
+@media (min-width: 881px) {
+  body { padding-bottom: 0; }
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+/* Laptop & Desktop Container */
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+@media (max-width: 768px) {
+  .container { padding: 0 1.25rem; }
+}
+
+:focus-visible { outline: 3px solid var(--highway); outline-offset: 2px; }
+
+/* ============================================================
+   WHITE & YELLOW TOP NAV
+   ============================================================ */
+.topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 2.5px solid var(--highway);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+.topnav .wrap {
+  max-width: 1240px; margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 70px;
+}
+@media (max-width: 768px) {
+  .topnav .wrap { padding: 0 1.25rem; height: 62px; }
+}
+.brand { display: flex; align-items: center; gap: .7rem; }
+.brand .mark {
+  width: 38px; height: 38px; border-radius: 9px;
+  background: linear-gradient(135deg, #F5B700, #FFC933);
+  color: #111827;
+  font-family: var(--display); font-weight: 800; font-size: 1.05rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(245, 183, 0, 0.4);
+  transform: skewX(-5deg);
+}
+.brand .mark span { transform: skewX(5deg); }
+.brand-text { font-family: var(--display); font-weight: 800; font-size: 1.28rem; color: var(--asphalt); letter-spacing: -.02em; }
+.brand-text b { color: #D97706; }
+
+.navlinks { display: flex; align-items: center; gap: 1.6rem; list-style: none; }
+.navlinks a { color: var(--steel); font-size: .92rem; font-weight: 600; transition: color .15s ease; }
+.navlinks a:hover { color: #B45309; }
+.navlinks a.active { color: #D97706; font-weight: 700; }
+
+.nav-radar {
+  display: inline-flex; align-items: center; gap: .5rem;
+  color: #92400E; font-weight: 700;
+  background: #FEF3C7;
+  border: 1.5px solid var(--highway);
+  padding: .35em .85em; border-radius: 999px;
+  transition: all .2s ease;
+}
+.nav-radar:hover { background: #FDE68A; color: #78350F; }
+.nav-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #10B981; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: radarpulse 1.8s ease-out infinite;
+}
+@keyframes radarpulse {
+  0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70%  { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.nav-user { display: flex; align-items: center; gap: .75rem; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  padding: .65em 1.35em; border-radius: var(--radius-s);
+  font-weight: 700; font-size: .9rem; border: 1.5px solid transparent;
+  transition: transform .12s ease, background .15s ease, border-color .15s ease, box-shadow .2s ease;
+  min-height: 42px;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary {
+  background: linear-gradient(135deg, #F5B700, #FBBF24);
+  color: #111827;
+  border-color: #F59E0B;
+  box-shadow: 0 4px 14px rgba(245, 183, 0, 0.35);
+}
+.btn-primary:hover { background: #FCD34D; box-shadow: 0 6px 18px rgba(245, 183, 0, 0.5); }
+.btn-outline {
+  border-color: #D1D5DB;
+  color: var(--asphalt); background: #FFFFFF;
+}
+.btn-outline:hover {
+  border-color: var(--highway); background: #FFFBEB; color: #B45309;
+}
+.btn-block { width: 100%; }
+.btn-sm { padding: .45em .95em; font-size: .84rem; min-height: 36px; }
+
+.theme-toggle-btn {
+  background: #FFFFFF; border: 1.5px solid #E5E7EB; color: var(--asphalt);
+  padding: .45em .8em; border-radius: 8px; font-weight: 600; font-size: .82rem;
+  display: flex; align-items: center; gap: 4px; transition: all .15s ease;
+}
+.theme-toggle-btn:hover { border-color: var(--highway); background: #FFFBEB; }
+
+.hamburger {
+  display: none; background: #FFFFFF; border: 1.5px solid #E5E7EB;
+  color: var(--asphalt); font-size: 1.3rem; width: 44px; height: 44px; border-radius: 8px;
+  align-items: center; justify-content: center;
+}
+@media (max-width: 880px) {
+  .navlinks { display: none; }
+  .hamburger { display: flex; }
+}
+
+/* Mobile Drawer */
+.mobile-drawer-overlay {
+  position: fixed; inset: 0; background: rgba(17, 24, 39, 0.45);
+  backdrop-filter: blur(4px); z-index: 150;
+  opacity: 0; pointer-events: none; transition: opacity .25s ease;
+}
+.mobile-drawer-overlay.open { opacity: 1; pointer-events: auto; }
+.mobile-drawer {
+  position: fixed; top: 0; right: -320px; width: 300px; height: 100%;
+  background: var(--panel-white);
+  border-left: 3px solid var(--highway);
+  z-index: 160; padding: 1.5rem 1.25rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  transition: right .3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.15);
+}
+.mobile-drawer.open { right: 0; }
+.mobile-drawer-head { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E5E7EB; padding-bottom: 1rem; }
+.drawer-close {
+  background: #F3F4F6; border: none; color: var(--asphalt);
+  width: 38px; height: 38px; border-radius: 50%; font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.mobile-drawer-links { list-style: none; margin: 1.5rem 0; display: flex; flex-direction: column; gap: .75rem; }
+.mobile-drawer-links a {
+  display: flex; align-items: center; justify-content: space-between;
+  color: var(--asphalt); font-size: 1rem; font-weight: 700; padding: .65rem .8rem;
+  border-radius: 8px; transition: background .15s ease;
+}
+.mobile-drawer-links a:hover { background: #FEF3C7; color: #92400E; }
+.drawer-sub { font-size: .78rem; color: var(--steel); font-weight: 500; display: block; margin-top: 2px; }
+
+/* Ticker */
+.ticker-wrap {
+  background: #FFFBEB;
+  border-bottom: 1px solid #FDE68A;
+  overflow: hidden; white-space: nowrap; padding: .65rem 0;
+  position: relative;
+}
+.ticker {
+  display: inline-flex; gap: 2.8rem;
+  animation: tickerscroll 40s linear infinite;
+  padding-left: 100%;
+}
+.ticker:hover { animation-play-state: paused; }
+.ticker-item {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-size: .84rem; color: #78350F; font-weight: 500;
+}
+.ticker-pulse-tag {
+  background: #FEF3C7; color: #92400E;
+  border: 1.5px solid #F5B700;
+  font-size: .7rem; font-weight: 800; padding: .15em .55em;
+  border-radius: 4px; font-family: var(--mono);
+}
+.ticker em { color: #B45309; font-style: normal; font-weight: 700; }
+@keyframes tickerscroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+
+/* ============================================================
+   HERO SECTION: BALANCED 2-COLUMN LAPTOP LAYOUT
+   ============================================================ */
+.hero {
+  padding: 3.5rem 0 4rem;
+  position: relative;
+}
+@media (max-width: 880px) {
+  .hero { padding: 2rem 0 3rem; }
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 3.2rem;
+  align-items: start;
+}
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+.dynamic-greeting-chip {
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: #FEF3C7;
+  border: 1.5px solid #FCD34D;
+  padding: .4em .95em; border-radius: 999px;
+  font-size: .78rem; color: #92400E; font-weight: 700;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 8px rgba(245, 183, 0, 0.15);
+}
+.greeting-live-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #10B981; animation: radarpulse 1.8s infinite;
+}
+
+.hero-title {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(2.3rem, 3.8vw, 3.4rem);
+  line-height: 1.1; letter-spacing: -.025em;
+  color: var(--asphalt); margin-bottom: 1.2rem;
+}
+.hero-title .fill {
+  position: relative; display: inline-block; color: #D97706;
+}
+.hero-title .fill svg {
+  position: absolute; left: 0; bottom: -.1em; width: 100%; height: .35em; z-index: -1;
+}
+
+.hero-sub {
+  font-size: 1.08rem; color: var(--steel); max-width: 52ch; margin-bottom: 1.2rem;
+  line-height: 1.6; font-weight: 400;
+}
+.hero-vernacular {
+  display: inline-block;
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-left: 4px solid var(--highway);
+  padding: .65rem 1rem; border-radius: 0 8px 8px 0;
+  font-size: .9rem; color: #78350F; margin-bottom: 1.8rem;
+  font-weight: 500; line-height: 1.55;
+}
+
+/* Hero Proof Cards */
+.hero-proof {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  margin-top: 1.8rem;
+}
+@media (max-width: 540px) {
+  .hero-proof { grid-template-columns: 1fr; gap: .75rem; }
+}
+.proof-glass-card {
+  background: var(--panel-white);
+  border: 1.5px solid rgba(245, 183, 0, 0.35);
+  border-radius: var(--radius-m);
+  padding: 1.1rem;
+  box-shadow: 0 4px 16px rgba(245, 183, 0, 0.12);
+  transition: transform .2s ease, border-color .2s ease;
+}
+.proof-glass-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--highway);
+}
+.proof-num {
+  font-family: var(--display); font-size: 1.75rem; font-weight: 800; color: #D97706;
+  display: flex; align-items: baseline; gap: 2px;
+}
+.proof-lbl { font-size: .84rem; color: var(--asphalt); margin-top: .2rem; font-weight: 700; }
+.proof-sub { font-size: .72rem; color: var(--steel-dim); margin-top: 1px; }
+
+/* Route visual line */
+.route-visual-wrap {
+  margin-top: 1.8rem; background: var(--panel-white);
+  border: 1.5px solid #E5E7EB; border-radius: var(--radius-m);
+  padding: 1.2rem 1.4rem; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+.route-visual-head {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: .8rem;
+  font-size: .8rem; color: var(--steel); font-family: var(--mono); font-weight: 700;
+}
+.route-visual-badge {
+  background: #D1FAE5; color: #065F46; padding: 3px 8px; border-radius: 4px; font-weight: 700;
+}
+
+/* ============================================================
+   BOOKING CARD (RIGHT COLUMN IN HERO)
+   ============================================================ */
+.glass-booking-card {
+  background: var(--panel-white);
+  border: 2px solid rgba(245, 183, 0, 0.4);
+  border-radius: var(--radius-l);
+  padding: 1.8rem;
+  box-shadow: 0 20px 50px -10px rgba(245, 183, 0, 0.16), 0 4px 20px rgba(0, 0, 0, 0.04);
+  color: var(--asphalt);
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 600px) {
+  .glass-booking-card { padding: 1.25rem; border-radius: var(--radius-m); }
+}
+
+.booking-head {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem;
+}
+.booking-head h3 { font-family: var(--display); font-size: 1.25rem; font-weight: 800; color: var(--asphalt); }
+.booking-sub { font-size: .82rem; color: var(--steel); margin-top: 2px; }
+.save-chip-glass {
+  background: #D1FAE5;
+  border: 1.5px solid #34D399;
+  color: #065F46; font-weight: 800; font-size: .78rem;
+  padding: .4em .85em; border-radius: 999px;
+}
+
+/* Vehicle Tabs */
+.tabs-wrap {
+  display: flex; gap: .45rem; margin-bottom: 1.1rem;
+  overflow-x: auto; padding-bottom: .3rem; scrollbar-width: none;
+}
+.tabs-wrap::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 1; min-width: 95px; white-space: nowrap;
+  background: #F9FAFB;
+  border: 1.5px solid #E5E7EB;
+  border-radius: var(--radius-s); padding: .6em .5em;
+  font-size: .8rem; font-weight: 700; color: var(--steel);
+  text-align: center; transition: all .18s ease;
+}
+.tab-btn:hover { background: #FEF3C7; border-color: var(--highway); color: #78350F; }
+.tab-btn.active {
+  background: linear-gradient(135deg, #F5B700, #FBBF24);
+  border-color: #D97706;
+  color: #111827; font-weight: 800;
+  box-shadow: 0 4px 12px rgba(245, 183, 0, 0.35);
+}
+
+/* Route Inputs */
+.route-inputs {
+  background: #F9FAFB;
+  border: 1.5px solid #E5E7EB;
+  border-radius: var(--radius-m);
+  padding: .8rem .95rem; margin-bottom: 1.1rem;
+}
+.input-row { display: flex; align-items: center; gap: .85rem; padding: .5rem 0; }
+.input-row + .input-row { border-top: 1px dashed #D1D5DB; }
+.pin {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--milestone); box-shadow: 0 0 6px rgba(234, 88, 12, 0.5);
+  flex-shrink: 0;
+}
+.pin.sq { border-radius: 3px; background: #D97706; box-shadow: 0 0 6px rgba(217, 119, 6, 0.5); }
+.input-lbl {
+  display: block; font-size: .7rem; color: var(--steel-dim); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .03em; margin-bottom: .15rem;
+}
+.route-inputs select {
+  border: none; background: transparent; font-family: var(--body); font-size: .98rem;
+  font-weight: 700; color: var(--asphalt); width: 100%; padding: 0; cursor: pointer;
+}
+.route-inputs select option { background: #FFFFFF; color: #111827; }
+
+.corridor-dynamic-pill {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #FFFBEB; border: 1.5px solid #FCD34D;
+  border-radius: 8px; padding: .45rem .8rem; font-size: .78rem; color: #78350F;
+  margin-bottom: 1.1rem; font-family: var(--mono); font-weight: 600;
+}
+.corridor-dynamic-pill strong { color: #B45309; }
+
+/* Weight slider */
+.weight-box {
+  background: #F9FAFB; border: 1.5px solid #E5E7EB;
+  border-radius: var(--radius-m); padding: .85rem .95rem; margin-bottom: 1.1rem;
+}
+.weight-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; }
+.weight-row span { font-size: .82rem; font-weight: 600; color: var(--steel); }
+.weight-row strong { color: #D97706; font-size: 1.1rem; font-family: var(--display); font-weight: 800; }
+.weight-avail {
+  font-size: .74rem; font-weight: 700; color: #059669; display: flex; align-items: center; gap: .35em;
+}
+.weight-avail::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #059669; }
+input[type=range] {
+  width: 100%; -webkit-appearance: none; height: 6px; border-radius: 99px;
+  background: #E5E7EB; accent-color: #D97706; cursor: pointer;
+}
+
+.preset-chips { display: flex; gap: .4rem; margin-top: .55rem; flex-wrap: wrap; }
+.preset-btn {
+  background: #FFFFFF; border: 1.5px solid #D1D5DB;
+  color: var(--steel); font-size: .72rem; font-weight: 600; padding: .22em .6em; border-radius: 6px;
+  font-family: var(--mono); transition: all .15s ease;
+}
+.preset-btn:hover { background: #FEF3C7; color: #78350F; border-color: var(--highway); }
+
+/* 3D Cargo Bed Visualizer */
+.cargo-panel {
+  background: #111827;
+  border: 1.5px solid #374151;
+  border-radius: var(--radius-m);
+  padding: .9rem; position: relative; overflow: hidden; margin-bottom: 1.1rem;
+}
+.cargo-head {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; position: relative;
+}
+.cargo-head h4 {
+  font-family: var(--mono); font-size: .74rem; color: #F3F4F6; font-weight: 700;
+  display: flex; align-items: center; gap: .4em;
+}
+.cargo-util {
+  font-family: var(--mono); font-size: .72rem; font-weight: 800; color: var(--highway);
+  background: rgba(245, 183, 0, 0.16); border: 1px solid rgba(245, 183, 0, 0.4);
+  padding: .2em .6em; border-radius: 5px;
+}
+.cargo-legend {
+  display: flex; gap: .9rem; margin-top: .5rem; position: relative; flex-wrap: wrap;
+}
+.legend-item { display: flex; align-items: center; gap: .4em; font-size: .72rem; color: #9CA3AF; }
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+.dot-driver { background: #6B7280; }
+.dot-shipper { background: #F5B700; }
+.dot-empty { background: transparent; border: 1.5px dashed #60A5FA; }
+
+/* Fare Box */
+.fare-box {
+  background: #FEF3C7; border: 1.5px solid #FCD34D;
+  border-radius: var(--radius-m); padding: 1rem 1.15rem; margin-bottom: 1.1rem;
+}
+.fare-row { display: flex; justify-content: space-between; align-items: baseline; }
+.fare-row + .fare-row { margin-top: .55rem; padding-top: .55rem; border-top: 1px dashed #FDE68A; }
+.fare-label { font-size: .82rem; color: #78350F; font-weight: 600; }
+.fare-old { font-size: .92rem; color: #9CA3AF; text-decoration: line-through; font-weight: 500; }
+.fare-new {
+  font-family: var(--display); font-size: 1.45rem; font-weight: 800; color: #B45309;
+}
+.fare-save { color: #065F46; font-weight: 800; font-size: .94rem; }
+
+/* CTA Buttons */
+.cta-stack { display: flex; flex-direction: column; gap: .65rem; }
+.btn-book-primary {
+  background: linear-gradient(135deg, #F5B700, #F59E0B);
+  color: #111827; text-align: center;
+  padding: .9em; border-radius: var(--radius-s); font-weight: 800; font-size: 1.02rem;
+  border: 1.5px solid #D97706; display: block; box-shadow: 0 4px 16px rgba(245, 183, 0, 0.4);
+  transition: all .15s ease;
+}
+.btn-book-primary:hover {
+  background: #FCD34D; transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(245, 183, 0, 0.5);
+  color: #111827;
+}
+
+/* Matched Drivers Preview */
+.matched-drivers-preview {
+  margin-top: 1.1rem; border-top: 1.5px solid #E5E7EB;
+  padding-top: .9rem;
+}
+.matched-head {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem;
+  font-size: .76rem; color: var(--steel); font-family: var(--mono); font-weight: 700;
+}
+.matched-truck-card {
+  background: #F9FAFB; border: 1.5px solid #E5E7EB;
+  border-radius: 8px; padding: .6rem .8rem; margin-bottom: .45rem;
+  display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+  transition: background .15s ease, border-color .15s ease;
+}
+.matched-truck-card:hover {
+  background: #FFFBEB; border-color: var(--highway);
+}
+.matched-driver-name { font-weight: 700; font-size: .84rem; color: var(--asphalt); }
+.matched-driver-meta { font-size: .72rem; color: var(--steel); }
+.matched-driver-space {
+  font-family: var(--mono); font-size: .78rem; font-weight: 800; color: #D97706;
+  white-space: nowrap; text-align: right;
+}
+
+/* ============================================================
+   DEDICATED LIVE RADAR & HIGHWAY TRAFFIC SECTION (BALANCED 2-COL)
+   ============================================================ */
+.section-radar-traffic {
+  padding: 4.5rem 0;
+  background: #F9FAFB;
+  border-top: 1px solid #E5E7EB;
+  border-bottom: 1px solid #E5E7EB;
+}
+.radar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .radar-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.radar-telemetry-card {
+  background: var(--panel-white);
+  border: 2px solid rgba(245, 183, 0, 0.35);
+  border-radius: var(--radius-l);
+  padding: 1.8rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+.radar-top {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1.5px solid #E5E7EB;
+  padding-bottom: .85rem; margin-bottom: 1.1rem;
+}
+.radar-title { display: flex; align-items: center; gap: .6em; color: var(--asphalt); font-weight: 800; font-size: 1.05rem; }
+.radar-refresh-btn {
+  background: #FEF3C7; border: 1.5px solid var(--highway);
+  color: #78350F; font-size: .74rem; font-weight: 700; padding: .3em .75em; border-radius: 999px;
+  font-family: var(--mono); transition: all .15s ease;
+}
+.radar-refresh-btn:hover { background: #FDE68A; }
+
+.intel-bar {
+  display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 1.2rem;
+  font-size: .82rem; color: var(--steel); background: #F9FAFB;
+  border: 1px solid #E5E7EB; padding: .75rem 1rem; border-radius: 8px;
+}
+.intel-bar strong { color: var(--asphalt); }
+
+.esg-strip {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-top: 1.2rem;
+}
+@media (max-width: 500px) {
+  .esg-strip { grid-template-columns: 1fr; gap: .6rem; }
+}
+.esg-card {
+  background: #FFFBEB; border: 1.5px solid #FCD34D;
+  border-radius: var(--radius-m); padding: .85rem; text-align: center;
+}
+.esg-lbl { font-size: .74rem; color: #78350F; display: block; margin-bottom: .25rem; font-weight: 600; }
+.esg-val { font-family: var(--display); font-weight: 800; font-size: 1.25rem; }
+
+/* Corridor List Card */
+.corridor-list-card {
+  background: var(--panel-white);
+  border: 2px solid #E5E7EB;
+  border-radius: var(--radius-l);
+  padding: 1.8rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+.corridor-row {
+  background: #F9FAFB;
+  border: 1.5px solid #E5E7EB;
+  border-radius: var(--radius-m);
+  padding: 1rem 1.15rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.corridor-row:hover { transform: translateX(3px); border-color: var(--highway); background: #FFFBEB; }
+.corridor-row + .corridor-row { margin-top: .8rem; }
+.corridor-name { color: var(--asphalt); font-weight: 700; font-size: .95rem; }
+.corridor-meta { color: var(--steel); font-size: .78rem; margin-top: .15rem; }
+.corridor-space { color: #D97706; font-weight: 800; font-size: .9rem; font-family: var(--mono); white-space: nowrap; }
+
+/* ============================================================
+   SIMPLE 3-STEP EXPLANATION (LAPTOP 3-COL, MOBILE 1-COL)
+   ============================================================ */
+.section-steps {
+  padding: 5rem 0;
+}
+@media (max-width: 768px) { .section-steps { padding: 3.5rem 0; } }
+
+.steps-head { text-align: center; max-width: 680px; margin: 0 auto 3rem; }
+.steps-head h2 {
+  font-family: var(--display); font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+  font-weight: 800; color: var(--asphalt); margin-bottom: .6rem;
+}
+.steps-head p { color: var(--steel); font-size: 1.05rem; }
+
+.steps-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+}
+@media (max-width: 860px) {
+  .steps-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+}
+
+.step-card {
+  background: var(--panel-white); border: 2px solid #E5E7EB;
+  border-radius: var(--radius-l); padding: 2.2rem 1.8rem;
+  position: relative; transition: all .2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+.step-card:hover {
+  transform: translateY(-4px); box-shadow: 0 12px 30px rgba(245, 183, 0, 0.18);
+  border-color: var(--highway);
+}
+.step-num-badge {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, #F5B700, #FBBF24); color: #111827;
+  font-family: var(--display); font-size: 1.25rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem; box-shadow: 0 4px 12px rgba(245, 183, 0, 0.35);
+}
+.step-icon { font-size: 2rem; margin-bottom: .8rem; }
+.step-title {
+  font-family: var(--display); font-size: 1.25rem; font-weight: 800;
+  color: var(--asphalt); margin-bottom: .4rem;
+}
+.step-hindi {
+  font-size: .84rem; color: #D97706; font-weight: 700; margin-bottom: .6rem;
+}
+.step-desc { color: var(--steel); font-size: .94rem; line-height: 1.6; }
+
+/* ============================================================
+   MANIFESTO / OUR MISSION
+   ============================================================ */
+.manifesto-section {
+  padding: 5rem 0;
+  background: #FFFBEB;
+  border-top: 2px solid #FDE68A;
+  border-bottom: 2px solid #FDE68A;
+}
+.manifesto-card {
+  background: var(--panel-white);
+  border: 2px solid var(--highway-border);
+  border-radius: var(--radius-l);
+  padding: 3.5rem 3rem;
+  box-shadow: 0 20px 50px -10px rgba(245, 183, 0, 0.16);
+}
+@media (max-width: 820px) {
+  .manifesto-card { padding: 2rem 1.4rem; }
+}
+.manifesto-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--mono); font-size: .75rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: #92400E; background: #FEF3C7;
+  border: 1.5px solid var(--highway);
+  padding: .4em .9em; border-radius: 999px; margin-bottom: 1.2rem;
+}
+.manifesto-quote {
+  font-family: var(--display); font-size: clamp(1.8rem, 3.8vw, 2.9rem);
+  font-weight: 800; line-height: 1.15; letter-spacing: -.02em;
+  color: var(--asphalt); margin-bottom: 1.4rem; max-width: 32ch;
+}
+.manifesto-quote mark {
+  background: none; color: #D97706; font-weight: 800;
+}
+.manifesto-body {
+  color: var(--steel); font-size: 1.1rem; line-height: 1.7; max-width: 60ch;
+  margin-bottom: 2.6rem;
+}
+.manifesto-pillars {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+  border-top: 1.5px solid #E5E7EB; padding-top: 2.2rem;
+}
+@media (max-width: 820px) {
+  .manifesto-pillars { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+.pillar h4 {
+  font-family: var(--display); font-size: 1.15rem; font-weight: 800;
+  color: var(--asphalt); margin-bottom: .4rem;
+}
+.pillar-hindi { font-size: .82rem; color: #D97706; font-weight: 700; margin-bottom: .4rem; }
+.pillar p { color: var(--steel); font-size: .9rem; line-height: 1.6; }
+
+/* ============================================================
+   TRUST & SAFETY (4-COL ON LAPTOP)
+   ============================================================ */
+.section-trust {
+  padding: 5rem 0;
+}
+@media (max-width: 768px) { .section-trust { padding: 3.5rem 0; } }
+
+.trust-head { max-width: 650px; margin-bottom: 2.8rem; }
+.trust-head h2 {
+  font-family: var(--display); font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+  font-weight: 800; color: var(--asphalt); margin-bottom: .6rem;
+}
+.trust-head p { color: var(--steel); font-size: 1.02rem; }
+
+.trust-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem;
+}
+@media (max-width: 1024px) { .trust-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 550px) { .trust-grid { grid-template-columns: 1fr; } }
+
+.trust-card {
+  background: var(--panel-white); border: 2px solid #E5E7EB;
+  border-radius: var(--radius-m); padding: 1.8rem 1.5rem;
+  transition: all .2s ease; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+.trust-card:hover {
+  border-color: var(--highway); transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(245, 183, 0, 0.15);
+}
+.trust-icon-box {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: #FEF3C7; color: #D97706; border: 1.5px solid #FDE68A;
+  font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+}
+.trust-card h3 {
+  font-family: var(--display); font-size: 1.1rem; font-weight: 800;
+  color: var(--asphalt); margin-bottom: .3rem;
+}
+.trust-hindi { font-size: .8rem; color: #059669; font-weight: 700; margin-bottom: .5rem; }
+.trust-card p { color: var(--steel); font-size: .88rem; line-height: 1.55; }
+
+/* ============================================================
+   DRIVER BANNER
+   ============================================================ */
+.section-driver {
+  padding: 2.5rem 0 5rem;
+}
+.captain-banner {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
+  border: 2.5px solid var(--highway);
+  border-radius: var(--radius-l);
+  padding: 3.2rem 3rem; display: grid; grid-template-columns: 1.35fr .65fr; gap: 2.5rem; align-items: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 20px 45px rgba(245, 183, 0, 0.18);
+}
+@media (max-width: 860px) {
+  .captain-banner { grid-template-columns: 1fr; padding: 2rem 1.4rem; }
+}
+.captain-tag {
+  display: inline-block; font-family: var(--mono); font-size: .75rem; color: #78350F;
+  border: 1.5px solid var(--highway); padding: .35em .85em; border-radius: 99px; margin-bottom: 1.2rem;
+  background: #FFFFFF; font-weight: 800;
+}
+.captain-banner h2 {
+  font-family: var(--display); font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 800; color: var(--asphalt); margin-bottom: .4rem; letter-spacing: -.01em;
+}
+.captain-hindi-lead { font-size: 1.05rem; color: #B45309; font-weight: 700; margin-bottom: .8rem; }
+.captain-banner p { color: var(--steel); max-width: 52ch; margin-bottom: 1.8rem; line-height: 1.6; font-size: .95rem; }
+.captain-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+.cstat-num { font-family: var(--display); font-size: 1.7rem; font-weight: 800; color: #B45309; }
+.cstat-lbl { font-size: .76rem; color: var(--steel); margin-top: .15rem; font-weight: 600; }
+
+/* ============================================================
+   FLEET / TRUCK TYPES (4-COL ON LAPTOP)
+   ============================================================ */
+.section-fleet {
+  padding: 5rem 0; background: #F9FAFB;
+  border-top: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB;
+}
+@media (max-width: 768px) { .section-fleet { padding: 3.5rem 0; } }
+
+.fleet-head { max-width: 620px; margin-bottom: 2.8rem; }
+.fleet-head h2 {
+  font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.3rem);
+  font-weight: 800; color: var(--asphalt); margin-bottom: .5rem;
+}
+.fleet-head p { color: var(--steel); font-size: 1rem; }
+
+.fleet-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem;
+}
+@media (max-width: 1024px) { .fleet-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .fleet-grid { grid-template-columns: 1fr; } }
+
+.fleet-card {
+  background: var(--panel-white); border-radius: var(--radius-m); padding: 1.8rem 1.5rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border: 2px solid #E5E7EB;
+  transition: all .2s ease; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+.fleet-card:hover {
+  border-color: var(--highway); transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(245, 183, 0, 0.16);
+}
+.fleet-glyph { width: 52px; height: 52px; margin-bottom: 1rem; }
+.fleet-card h3 {
+  font-family: var(--display); font-size: 1.15rem; font-weight: 800;
+  color: var(--asphalt); margin-bottom: .2rem;
+}
+.fleet-hindi-badge { font-size: .78rem; color: #D97706; font-weight: 700; margin-bottom: .6rem; }
+.fleet-card .spec { color: var(--steel); font-size: .86rem; line-height: 1.55; margin-bottom: .8rem; }
+.fleet-pill {
+  display: inline-block; font-size: .72rem; font-weight: 700;
+  color: #065F46; background: #D1FAE5;
+  padding: .3em .75em; border-radius: 99px; margin-bottom: 1.2rem;
+}
+
+/* Sticky Mobile Bar */
+.mobile-sticky-bar {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 2.5px solid var(--highway);
+  padding: .65rem 1rem; z-index: 90;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
+}
+@media (max-width: 880px) {
+  .mobile-sticky-bar {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: .75rem;
+  }
+}
+.mobile-sticky-btn {
+  display: flex; align-items: center; justify-content: center; gap: .4rem;
+  border-radius: var(--radius-s); font-weight: 700; font-size: .9rem;
+  padding: .75rem; text-align: center;
+}
+
+/* Footer */
+.footer {
+  background: #111827; padding: 4rem 0 2.5rem;
+  border-top: 3px solid var(--highway);
+  color: #F3F4F6;
+}
+.footer .wrap {
+  display: flex; justify-content: space-between; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+}
+.footer-tag { color: #9CA3AF; font-size: .88rem; max-width: 42ch; margin-top: .8rem; line-height: 1.6; }
+.footer-col h4 { color: #FFFFFF; font-family: var(--display); font-size: .9rem; font-weight: 800; margin-bottom: .8rem; }
+.footer-col a { display: block; color: #9CA3AF; font-size: .86rem; padding: .35em 0; transition: color .15s; }
+.footer-col a:hover { color: var(--highway); }
+.footer-bottom {
+  border-top: 1px solid #1F2937; padding-top: 1.5rem;
+  color: #6B7280; font-size: .78rem; font-family: var(--mono);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(17, 24, 39, 0.5);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; padding: 1.2rem;
+  opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 200;
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-card {
+  background: var(--panel-white); border-radius: var(--radius-l); padding: 2rem;
+  max-width: 460px; width: 100%; position: relative;
+  transform: scale(.95); transition: transform .2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+  border: 2px solid var(--highway);
+  color: var(--asphalt);
+}
+.modal-overlay.active .modal-card { transform: scale(1); }
+.modal-close {
+  position: absolute; top: 1.2rem; right: 1.2rem; background: #F3F4F6;
+  border: none; width: 34px; height: 34px; border-radius: 50%; font-size: 1.2rem;
+  color: var(--steel); cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.ewb-badge {
+  display: inline-block; font-family: var(--mono); font-size: .72rem; font-weight: 800;
+  color: #065F46; background: #D1FAE5; padding: .4em .8em;
+  border-radius: 6px; margin-bottom: .8rem;
+}
+.ewb-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.2rem 0;
+  background: #F9FAFB; padding: 1rem; border-radius: var(--radius-m); border: 1px solid #E5E7EB;
+}
+.ewb-grid span {
+  display: block; color: var(--steel-dim); font-size: .7rem; font-weight: 700; text-transform: uppercase;
+}
+.ewb-grid strong { font-size: .92rem; color: var(--asphalt); font-weight: 700; }
+.qr-box {
+  display: flex; gap: 1rem; align-items: center; background: #111827;
+  border-radius: var(--radius-m); padding: 1rem; margin-bottom: 1.1rem;
+}
+.qr-code { width: 64px; height: 64px; background: #FFFFFF; border-radius: 6px; padding: 5px; flex-shrink: 0; }
+.otp-strip {
+  background: #FEF3C7; border: 1.5px solid #FCD34D; border-radius: 10px;
+  padding: .85rem 1rem; display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; margin-bottom: 1.2rem;
+}
+.otp-strip div { font-size: .82rem; color: #78350F; font-weight: 600; }
+.otp-code {
+  background: #111827; color: var(--highway); font-family: var(--mono);
+  font-weight: 800; font-size: 1.15rem; padding: .25em .65em; border-radius: 6px;
+}
+</style>
+</head>
+<body>
+
+<!-- ============ WHITE & YELLOW TOP NAV ============ -->
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="#book">
+      <span class="mark"><span>LL</span></span>
+      <span class="brand-text">Load<b>Link</b></span>
+    </a>
+    <ul class="navlinks">
+      <li><a href="#book" class="active">  Book Space</a></li>
+      <li><a href="#live-radar">Active Trucks</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#captain">Drive &amp; Earn</a></li>
+      <li><a href="#safety">Safe &amp; Verified</a></li>
+      <li><a href="#fleet">Truck Types</a></li>
+      <li><a href="track.html" class="nav-radar"><span>Live GPS Radar</span> <span class="nav-dot"></span></a></li>
+      <li><a href="login.html" style="color:var(--steel); font-weight:600;">Log In</a></li>
+    </ul>
+    <div class="nav-user">
+      <button class="theme-toggle-btn" id="landingThemeToggle" type="button" aria-label="Toggle Theme">🌙 Dark</button>
+      <a class="btn btn-primary btn-sm" href="register.html">Sign Up</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open Navigation Menu">&#9776;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ MOBILE DRAWER ============ -->
+<div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div>
+    <div class="mobile-drawer-head">
+      <div class="brand">
+        <span class="mark"><span>LL</span></span>
+        <span class="brand-text">Load<b>Link</b></span>
+      </div>
+      <button class="drawer-close" id="drawerCloseBtn" aria-label="Close Navigation Menu">&times;</button>
+    </div>
+    <ul class="mobile-drawer-links">
+      <li>
+        <a href="#book" class="drawer-link">
+          <div>
+            <strong>Book Empty Space</strong>
+            <span class="drawer-sub">Send your goods &middot; Save 35%</span>
+          </div>
+          <span>&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a href="#live-radar" class="drawer-link">
+          <div>
+            <strong>Live Highway Radar</strong>
+            <span class="drawer-sub">See active returning trucks</span>
+          </div>
+          <span>&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a href="#how-it-works" class="drawer-link">
+          <div>
+            <strong>How It Works</strong>
+            <span class="drawer-sub">3 simple steps to deliver</span>
+          </div>
+          <span>&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a href="#captain" class="drawer-link">
+          <div>
+            <strong>Drive &amp; Earn</strong>
+            <span class="drawer-sub">Never drive empty &middot; Earn extra cash</span>
+          </div>
+          <span>&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a href="#safety" class="drawer-link">
+          <div>
+            <strong>Safety &amp; Trust</strong>
+            <span class="drawer-sub">Checked drivers &middot; Secret OTP delivery</span>
+          </div>
+          <span>&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a href="#fleet" class="drawer-link">
+          <div>
+            <strong>Truck Types</strong>
+            <span class="drawer-sub">Mini truck to 20ft container</span>
+          </div>
+          <span>&rarr;</span>
+        </a>
+      </li>
+      <li>
+        <a href="track.html" class="drawer-link" style="color:#B45309;">
+          <div>
+            <strong>Live GPS Radar Map</strong>
+            <span class="drawer-sub">Watch trucks live on map</span>
+          </div>
+          <span class="greeting-live-dot"></span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:.75rem;">
+    <a href="login.html" class="btn btn-outline btn-block">Log In (Sign In)</a>
+    <a href="register.html" class="btn btn-primary btn-block">Register (Free Sign Up)</a>
+  </div>
+</div>
+
+<!-- ============ LIGHT WARM TICKER ============ -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item"><span class="ticker-pulse-tag">&#9679; LIVE HIGHWAY</span> <strong>Vijayawada &#8596; Hyderabad:</strong> 14 returning trucks active &nbsp;<em>450 kg empty space</em></div>
+    <div class="ticker-item"><span class="ticker-pulse-tag">&#9679; LIVE HIGHWAY</span> <strong>Pune &#8596; Mumbai:</strong> 22 trucks moving &nbsp;<em>35% cheaper than full truck</em></div>
+    <div class="ticker-item"><span class="ticker-pulse-tag">&#9679; LIVE HIGHWAY</span> <strong>Nagpur &#8596; Mumbai:</strong> 8 containers open &nbsp;<em>Samruddhi Expressway pass</em></div>
+    <div class="ticker-item"><span class="ticker-pulse-tag">&#9679; LIVE HIGHWAY</span> <strong>Surat &#8596; Pune:</strong> 11 trucks open &nbsp;<em>Same-day pickup guaranteed</em></div>
+    <div class="ticker-item"><span class="ticker-pulse-tag">&#9679; LIVE HIGHWAY</span> <strong>Delhi &#8596; Jaipur:</strong> 18 verified drivers on NH-48 &nbsp;<em>FASTag GPS active</em></div>
+    <div class="ticker-item"><span class="ticker-pulse-tag">&#9679; LIVE HIGHWAY</span> <strong>Bengaluru &#8596; Chennai:</strong> 15 trucks on route &nbsp;<em>Zero empty runs</em></div>
+    <!-- Loop duplicate -->
+    <div class="ticker-item"><span class="ticker-pulse-tag">&#9679; LIVE HIGHWAY</span> <strong>Vijayawada &#8596; Hyderabad:</strong> 14 returning trucks active &nbsp;<em>450 kg empty space</em></div>
+    <div class="ticker-item"><span class="ticker-pulse-tag">&#9679; LIVE HIGHWAY</span> <strong>Pune &#8596; Mumbai:</strong> 22 trucks moving &nbsp;<em>35% cheaper than full truck</em></div>
+  </div>
+</div>
+
+<!-- ============ HERO SECTION (PERFECT 2-COLUMN LAPTOP BALANCE) ============ -->
+<header class="hero" id="book">
+  <div class="container hero-grid">
+    <div>
+      <div class="dynamic-greeting-chip" id="dynamicGreeting">
+        <span class="greeting-live-dot"></span>
+        <span id="greetingText">Good Afternoon &middot; 38 returning trucks running on highways right now</span>
+      </div>
+
+      <h1 class="hero-title">
+        Don’t hire an empty truck.<br>
+        <span class="fill">Fill the returning one.<svg viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M2 14 C 40 6, 160 6, 198 14" stroke="#F5B700" stroke-width="7" fill="none" stroke-linecap="round"/></svg></span>
+      </h1>
+
+      <p class="hero-sub">
+        Why pay full price for a whole truck when another truck is already driving back empty on your exact highway? LoadLink connects you with returning truck drivers &mdash; cutting delivery costs by 35% and giving you real-time GPS tracking on your mobile.
+      </p>
+
+      <div class="hero-vernacular">
+        💡 <strong>In Plain English:</strong> When a truck finishes a delivery and drives back empty, put your goods in it and pay only for your weight &mdash; saving you up to 35%!
+      </div>
+
+      <!-- Animated Proof Cards -->
+      <div class="hero-proof">
+        <div class="proof-glass-card">
+          <div class="proof-num"><span class="counter" data-target="5240">5,240</span><span>t</span></div>
+          <div class="proof-lbl">Goods Delivered</div>
+          <div class="proof-sub">Safely reached destination</div>
+        </div>
+        <div class="proof-glass-card">
+          <div class="proof-num"><span class="counter" data-target="10000">10,000</span><span>+</span></div>
+          <div class="proof-lbl">Verified Drivers</div>
+          <div class="proof-sub">Checked government license &amp; RC</div>
+        </div>
+        <div class="proof-glass-card">
+          <div class="proof-num"><span>&#8377;</span><span class="counter" data-target="48.5" data-decimal="1">48.5</span><span>L</span></div>
+          <div class="proof-lbl">Saved by Customers</div>
+          <div class="proof-sub">Direct shipping discounts</div>
+        </div>
+      </div>
+
+      <!-- Live Interactive Route Visual -->
+      <div class="route-visual-wrap">
+        <div class="route-visual-head">
+          <span id="heroRouteName">VIJAYAWADA &rarr; HYDERABAD (NH-65)</span>
+          <span class="route-visual-badge">&#9679; LIVE MOVEMENT</span>
+        </div>
+        <svg viewBox="0 0 520 90" width="100%" style="max-width:500px;" aria-hidden="true">
+          <path id="routePath" d="M10 70 C 120 70, 140 20, 260 20 S 400 70, 510 70" fill="none" stroke="#E5E7EB" stroke-width="3.5" stroke-dasharray="2 12" stroke-linecap="round"/>
+          <path id="routeProgress" d="M10 70 C 120 70, 140 20, 260 20 S 400 70, 510 70" fill="none" stroke="#F5B700" stroke-width="3.5" stroke-dasharray="2 12" stroke-linecap="round"/>
+          <circle cx="10" cy="70" r="7" fill="#EA580C"/>
+          <circle cx="510" cy="70" r="7" fill="#F5B700"/>
+          <text id="heroRouteOrigin" x="4" y="88" font-family="IBM Plex Mono" font-size="9.5" fill="#6B7280" font-weight="700">VIJAYAWADA</text>
+          <text id="heroRouteDest" x="432" y="88" font-family="IBM Plex Mono" font-size="9.5" fill="#B45309" font-weight="800">HYDERABAD</text>
+          <g id="truckMarker">
+            <rect x="-13" y="-8" width="26" height="16" rx="4" fill="#F5B700"/>
+            <circle cx="-6" cy="10" r="3" fill="#111827"/>
+            <circle cx="6" cy="10" r="3" fill="#111827"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ============ WHITE & YELLOW BOOKING CALCULATOR ============ -->
+    <div>
+      <div class="glass-booking-card">
+        <div class="booking-head">
+          <div>
+            <h3>Book Returning Truck</h3>
+            <div class="booking-sub">Share space in a returning truck</div>
+          </div>
+          <span class="save-chip-glass">&#9889; Save up to 35%</span>
+        </div>
+
+        <!-- Vehicle Type Tabs -->
+        <div class="tabs-wrap">
+          <button type="button" class="tab-btn active" onclick="selectVehicleTab(this, 'Tata Ace - 0.75T', 750)">Mini Truck (750kg)</button>
+          <button type="button" class="tab-btn" onclick="selectVehicleTab(this, 'Pickup - 1.5T', 1500)">Pickup (1.5T)</button>
+          <button type="button" class="tab-btn" onclick="selectVehicleTab(this, 'Open Truck - 9T', 9000)">9T Truck</button>
+          <button type="button" class="tab-btn" onclick="selectVehicleTab(this, 'Container - 20ft', 15000)">20ft Container</button>
+        </div>
+
+        <!-- Route Selectors -->
+        <div class="route-inputs">
+          <div class="input-row">
+            <div class="pin"></div>
+            <div style="flex:1;">
+              <span class="input-lbl">Pickup City (From where?)</span>
+              <select id="calcOrigin" onchange="onRouteChanged()">
+                <option value="Vijayawada, AP" selected>Vijayawada, AP &middot; NH-65</option>
+                <option value="Pune, MH">Pune, MH &middot; Mumbai Expressway</option>
+                <option value="Nagpur, MH">Nagpur, MH &middot; Samruddhi Mahamarg</option>
+                <option value="Surat, GJ">Surat, GJ &middot; Western Corridor</option>
+                <option value="Delhi, DL">Delhi, DL &middot; NH-48 Highway</option>
+                <option value="Bengaluru, KA">Bengaluru, KA &middot; NH-44 Highway</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-row">
+            <div class="pin sq"></div>
+            <div style="flex:1;">
+              <span class="input-lbl">Drop City (Where to?)</span>
+              <select id="calcDest" onchange="onRouteChanged()">
+                <option value="Hyderabad, TS" selected>Hyderabad, TS &middot; 275 km</option>
+                <option value="Mumbai, MH">Mumbai, MH &middot; 150 km</option>
+                <option value="Pune, MH">Pune, MH &middot; 280 km</option>
+                <option value="Jaipur, RJ">Jaipur, RJ &middot; 260 km</option>
+                <option value="Chennai, TN">Chennai, TN &middot; 345 km</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Corridor Distance Pill -->
+        <div class="corridor-dynamic-pill" id="corridorDynamicPill">
+          <span>Distance: <strong id="dynamicKm">275 km</strong></span>
+          <span>Estimated Drive: <strong id="dynamicDuration">5.5 hrs</strong></span>
+          <span style="color:#059669;">Active Trucks: <strong id="dynamicTruckCount" style="color:#059669;">14</strong></span>
+        </div>
+
+        <select id="calcVehicle" onchange="updateCalc()" style="display:none;">
+          <option value="Tata Ace - 0.75T">Tata Ace</option>
+          <option value="Pickup - 1.5T">Pickup truck</option>
+          <option value="Open Truck - 9T">Open truck</option>
+          <option value="Container - 20ft">Container</option>
+        </select>
+
+        <!-- Weight Slider -->
+        <div class="weight-box">
+          <div class="weight-row">
+            <span>Goods Weight (How heavy is your load?):</span>
+            <strong id="calcWeightLabel">250 kg</strong>
+          </div>
+          <input type="range" id="calcWeight" min="50" max="750" step="25" value="250" oninput="updateCalc()">
+          <div class="preset-chips" id="presetChips">
+            <button type="button" class="preset-btn" onclick="setWeightPreset(100)">100 kg</button>
+            <button type="button" class="preset-btn" onclick="setWeightPreset(250)">250 kg</button>
+            <button type="button" class="preset-btn" onclick="setWeightPreset(500)">500 kg</button>
+            <button type="button" class="preset-btn" onclick="setWeightPreset(750)">Max (750 kg)</button>
+          </div>
+        </div>
+
+        <!-- 3D Isometric Cargo Bed Visualizer -->
+        <div class="cargo-panel">
+          <div class="cargo-head">
+            <h4>&#9670; Truck Bed Space (See how much room is left)</h4>
+            <span class="cargo-util" id="cargoUtilBadge">65% filled</span>
+          </div>
+          <div class="cargo-stage">
+            <svg viewBox="0 0 420 180" width="100%" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="210,165 390,75 210,15 30,85" fill="none" stroke="#4B5563" stroke-width="1.5"/>
+              <polygon points="210,155 370,75 210,25 50,85" fill="none" stroke="#374151" stroke-width="1"/>
+              <g id="driverCargoGroup">
+                <polygon points="210,75 260,50 210,25 160,50" fill="#4B5563"/>
+                <polygon points="160,50 210,75 210,110 160,85" fill="#374151"/>
+                <polygon points="210,75 260,50 260,85 210,110" fill="#1F2937"/>
+                <text x="210" y="52" fill="#D1D5DB" font-size="8.5" font-family="IBM Plex Mono" text-anchor="middle">DRIVER 300KG</text>
+              </g>
+              <g id="userCargoGroup" style="transition:all .2s cubic-bezier(0.16, 1, 0.3, 1);">
+                <polygon id="userCargoTop" points="160,110 220,80 160,50 100,80" fill="#FDE047"/>
+                <polygon id="userCargoLeft" points="100,80 160,110 160,145 100,115" fill="#F5B700"/>
+                <polygon id="userCargoRight" points="160,110 220,80 220,115 160,145" fill="#D97706"/>
+                <text id="userCargoLabel" x="160" y="82" fill="#111827" font-size="9.5" font-family="IBM Plex Mono" font-weight="800" text-anchor="middle">YOU 250KG</text>
+              </g>
+              <g id="emptySpaceGroup">
+                <polygon points="260,135 360,85 260,35 160,85" fill="none" stroke="#60A5FA" stroke-width="1.4" stroke-dasharray="4 3"/>
+                <text x="268" y="112" fill="#93C5FD" font-size="8" font-family="IBM Plex Mono">EMPTY SPACE</text>
+              </g>
+            </svg>
+          </div>
+          <div class="cargo-legend">
+            <span class="legend-item"><span class="legend-dot dot-driver"></span>Already Loaded</span>
+            <span class="legend-item"><span class="legend-dot dot-shipper"></span>Your Goods (Your Cargo)</span>
+            <span class="legend-item"><span class="legend-dot dot-empty"></span>Empty Space Left (Room Still Free)</span>
+          </div>
+        </div>
+
+        <!-- Fare Box -->
+        <div class="fare-box">
+          <div class="fare-row">
+            <span class="fare-label">Hiring a whole truck (Full truck price):</span>
+            <span class="fare-old" id="calcTrad">&#8377;5,050</span>
+          </div>
+          <div class="fare-row">
+            <span class="fare-label" style="color:#78350F; font-weight:800;">Sharing return truck (Our discounted price):</span>
+            <span class="fare-new" id="calcRf">&#8377;3,500</span>
+          </div>
+          <div class="fare-row">
+            <span class="fare-label">Direct Savings (Money you keep):</span>
+            <span class="fare-save" id="calcSave">&#8377;1,550 (31% Saved)</span>
+          </div>
+        </div>
+
+        <!-- Action CTAs -->
+        <div class="cta-stack">
+          <a href="register.html?role=customer" class="btn-book-primary">
+            <span>Book This Return Space &rarr;</span>
+            <span style="font-size:.78rem; display:block; font-weight:600; opacity:.95;">(Instant Online Booking)</span>
+          </a>
+          <button type="button" class="btn btn-outline btn-block btn-sm" onclick="openEwaybillModal()">
+            Preview Digital Trip Pass &amp; Receipt (Road Pass)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ DEDICATED LIVE RADAR & HIGHWAY CORRIDORS SECTION ============ -->
+<section class="section-radar-traffic" id="live-radar">
+  <div class="container">
+    <div style="text-align:center; max-width:680px; margin:0 auto 2.5rem;">
+      <span class="dynamic-greeting-chip" style="margin-bottom:.8rem;">
+        <span class="greeting-live-dot"></span> LIVE HIGHWAY GPS RADAR
+      </span>
+      <h2 style="font-family:var(--display); font-size:clamp(1.8rem, 3vw, 2.4rem); font-weight:800; margin-bottom:.5rem;">
+        Active Trucks on National Corridors Right Now
+      </h2>
+      <p style="color:var(--steel); font-size:1.02rem;">
+        See real-time highway speeds, FASTag toll updates, and verified drivers with empty returning space.
+      </p>
+    </div>
+
+    <div class="radar-grid">
+      <!-- Left Column: Live Radar Telemetry & Clean Air Impact -->
+      <div>
+        <div class="radar-telemetry-card">
+          <div class="radar-top">
+            <div class="radar-title">
+              <span class="greeting-live-dot"></span>
+              <span>Live Highway Telemetry</span>
+            </div>
+            <button type="button" class="radar-refresh-btn" onclick="refreshRadarFeed()">&#8635; Refresh Live</button>
+          </div>
+          <div class="intel-bar" id="radarIntelBar">
+            <span>Speed: <strong id="radarSpeed">58 km/h</strong></span>
+            <span>FASTag: <strong style="color:#059669;">Passed Toll Plaza</strong></span>
+            <span>Road Status: <strong style="color:#D97706;">Clear Highway</strong></span>
+          </div>
+
+          <!-- Environmental Clean Air Impact -->
+          <div style="margin-top:1.4rem;">
+            <div style="font-size:.82rem; font-weight:700; color:var(--asphalt); margin-bottom:.6rem; text-transform:uppercase; letter-spacing:.04em; font-family:var(--mono);">
+              Environmental &amp; Highway Savings
+            </div>
+            <div class="esg-strip">
+              <div class="esg-card">
+                <span class="esg-lbl">Clean Air (CO2 Avoided)</span>
+                <div class="esg-val" style="color:#059669;" id="esgCo2">105 kg</div>
+              </div>
+              <div class="esg-card">
+                <span class="esg-lbl">Fuel Saved (Diesel)</span>
+                <div class="esg-val" style="color:#D97706;" id="esgDiesel">40 L</div>
+              </div>
+              <div class="esg-card">
+                <span class="esg-lbl">Toll Money Saved</span>
+                <div class="esg-val" style="color:#2563EB;" id="esgToll">&#8377;300</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Live Corridors & Driver Match List -->
+      <div>
+        <div class="corridor-list-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1.5px solid #E5E7EB; padding-bottom:.7rem;">
+            <span style="font-weight:800; font-size:.95rem;">Returning Drivers Ready to Take Load</span>
+            <span style="font-size:.76rem; font-weight:700; color:#059669; background:#D1FAE5; padding:2px 8px; border-radius:4px;">Live Updated</span>
+          </div>
+
+          <div class="corridor-row" onclick="window.location.href='register.html?role=customer'" style="cursor:pointer;">
+            <div>
+              <div class="corridor-name" id="radarRow1Name">Vijayawada &#8594; Hyderabad</div>
+              <div class="corridor-meta" id="radarRow1Meta">Ganesh Kale &middot; Tata Ace &middot; AP16 GK 7788 &middot; Leaving in 45m</div>
+            </div>
+            <div class="corridor-space" id="radarRow1Space">450 kg free space</div>
+          </div>
+
+          <div class="corridor-row" onclick="window.location.href='register.html?role=customer'" style="cursor:pointer;">
+            <div>
+              <div class="corridor-name" id="radarRow2Name">Pune &#8594; Mumbai</div>
+              <div class="corridor-meta" id="radarRow2Meta">Ramesh Patel &middot; Open 9T &middot; MH12 AB 4521 &middot; Khalapur Toll</div>
+            </div>
+            <div class="corridor-space" id="radarRow2Space">8.0 T free space</div>
+          </div>
+
+          <div class="corridor-row" onclick="window.location.href='register.html?role=customer'" style="cursor:pointer;">
+            <div>
+              <div class="corridor-name" id="radarRow3Name">Nagpur &#8594; Mumbai</div>
+              <div class="corridor-meta" id="radarRow3Meta">Vikram Shinde &middot; Container 20ft &middot; MH14 CD 7710 &middot; Samruddhi</div>
+            </div>
+            <div class="corridor-space" id="radarRow3Space">6.0 T free space</div>
+          </div>
+
+          <div style="margin-top:1.2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.8rem;">
+            <span style="font-size:.8rem; color:var(--steel);">Protected by secret mobile OTP &amp; FASTag</span>
+            <a href="track.html" class="btn btn-primary btn-sm">Open Full Live Map &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIMPLE 3-STEP EXPLANATION ============ -->
+<section class="section-steps" id="how-it-works">
+  <div class="container">
+    <div class="steps-head">
+      <h2>How LoadLink Works &mdash; Simple as 1, 2, 3</h2>
+      <p>Whether you're a farmer, shop owner, factory manager, or driver &mdash; sending goods takes only 2 minutes.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num-badge">1</div>
+        <div class="step-icon">📍</div>
+        <h3 class="step-title">Where to Where?</h3>
+        <div class="step-hindi">Choose pickup and drop cities</div>
+        <p class="step-desc">
+          Choose your pickup town and delivery city. You do not have to book a full truck &mdash; only enter how much weight or how many boxes you want to send.
+        </p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num-badge">2</div>
+        <div class="step-icon">🚚</div>
+        <h3 class="step-title">Pick Returning Truck</h3>
+        <div class="step-hindi">Choose empty space going your way</div>
+        <p class="step-desc">
+          We instantly match your goods with a verified driver who is already driving back empty on that exact road. You save up to 35% on shipping cost.
+        </p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num-badge">3</div>
+        <div class="step-icon">📱</div>
+        <h3 class="step-title">Pay Less &amp; Track on Phone</h3>
+        <div class="step-hindi">Save 35% and see live GPS on phone</div>
+        <p class="step-desc">
+          Watch the truck move live on your mobile screen. Delivery is 100% safe: goods are only handed over when your receiver shares the secret 4-digit code (OTP).
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MANIFESTO / OUR MISSION ============ -->
+<section class="manifesto-section">
+  <div class="container">
+    <div class="manifesto-card">
+      <div class="manifesto-badge">Our Mission &middot; Why We Do This</div>
+      <h2 class="manifesto-quote">“Don’t create another trip. <mark>Fill the empty one.</mark>”</h2>
+      <p class="manifesto-body">
+        India doesn't need more empty trucks burning expensive diesel on the roads. When an empty truck drives back from a delivery, why should a business owner or farmer pay full price to hire another vehicle? LoadLink fills that empty return space &mdash; saving customers up to 35%, putting more earnings in drivers' pockets, and reducing highway congestion.
+      </p>
+      <div class="manifesto-pillars">
+        <div class="pillar">
+          <h4>01 &middot; For Senders (Customers)</h4>
+          <div class="pillar-hindi">Pay only for what you send &middot; Save 35%</div>
+          <p>Stop paying for an empty truck's return journey. Share empty return space and pay strictly for the goods weight you carry.</p>
+        </div>
+        <div class="pillar">
+          <h4>02 &middot; For Truck Drivers</h4>
+          <div class="pillar-hindi">Fill your empty return bed &middot; Extra monthly cash</div>
+          <p>Driving back empty is a complete waste of diesel and time. Fill your empty truck bed with paying goods with zero broker commission and instant UPI payment.</p>
+        </div>
+        <div class="pillar">
+          <h4>03 &middot; For Roads &amp; Nation</h4>
+          <div class="pillar-hindi">Fewer empty trucks &middot; Less smoke &amp; traffic</div>
+          <p>Every returning truck that carries goods prevents an unnecessary truck from hitting the highway. Saves diesel, cuts carbon smoke, and unclogs toll plazas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST & SAFETY ============ -->
+<section class="section-trust" id="safety">
+  <div class="container">
+    <div class="trust-head">
+      <h2>Safe, Secure, and Verified Trips &mdash; No Blind Faith</h2>
+      <p>Every single booking on LoadLink is backed by government verified identity, live GPS, and digital delivery pass.</p>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon-box">🛡️</div>
+        <h3>Safe &amp; Insured Goods</h3>
+        <div class="trust-hindi">100% Protected Cargo</div>
+        <p>Your shipments are protected on national highways against accidental loss or road damage.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon-box">🆔</div>
+        <h3>Verified Drivers</h3>
+        <div class="trust-hindi">License &amp; Truck Papers Checked</div>
+        <p>Drivers must submit and pass checks on Driving License, vehicle RC, and truck fitness before accepting any load.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon-box">📍</div>
+        <h3>Live GPS on Phone</h3>
+        <div class="trust-hindi">Real-time Mobile Map</div>
+        <p>See real-time truck speed, toll crossings, and expected arrival time on your mobile screen.</p>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon-box">🔐</div>
+        <h3>4-Digit Secret Code (OTP)</h3>
+        <div class="trust-hindi">Secret 4-Digit Code Security</div>
+        <p>Goods are handed over only when the receiver provides the 4-digit secret code sent to their phone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DRIVER PARTNER BANNER ============ -->
+<section class="section-driver" id="captain">
+  <div class="container">
+    <div class="captain-banner">
+      <div>
+        <span class="captain-tag">Driver Partner Program &middot; Never Drive Back Empty</span>
+        <h2>Never drive back with an empty truck</h2>
+        <div class="captain-hindi-lead">Turn empty return trips into pure profit &mdash; get paid on every single trip!</div>
+        <p>
+          Do you drive a commercial truck, Tata Ace, pickup, or container? Never make the return trip with an empty bed. List your return journey in 1 minute, carry goods going along your highway, and keep 100% of your earnings &mdash; LoadLink charges zero broker commission.
+        </p>
+        <div class="captain-stats">
+          <div>
+            <div class="cstat-num">&#8377;45,000+</div>
+            <div class="cstat-lbl">Avg. Extra Monthly Cash (Direct to you)</div>
+          </div>
+          <div>
+            <div class="cstat-num">0%</div>
+            <div class="cstat-lbl">Broker Commission (100% Free to use)</div>
+          </div>
+          <div>
+            <div class="cstat-num">Direct UPI</div>
+            <div class="cstat-lbl">Direct Bank / UPI Payment (Direct to account)</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a href="register.html?role=driver" class="btn btn-primary btn-block" style="font-size:1.1rem; padding:1.1em 1.8rem;">
+          Register as Driver (Join as Partner) &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FLEET / VEHICLE TYPES ============ -->
+<section class="section-fleet" id="fleet">
+  <div class="container">
+    <div class="fleet-head">
+      <h2>Trucks for Every Type of Goods</h2>
+      <p>From small retail cartons to large heavy loads &mdash; matched to an empty truck heading your way.</p>
+    </div>
+    <div class="fleet-grid">
+      <div class="fleet-card">
+        <div>
+          <svg class="fleet-glyph" viewBox="0 0 48 48"><rect x="4" y="18" width="26" height="14" rx="2" fill="#F5B700"/><rect x="30" y="22" width="10" height="10" rx="1.5" fill="#111827"/><circle cx="13" cy="34" r="4" fill="#111827"/><circle cx="34" cy="34" r="4" fill="#111827"/></svg>
+          <h3>Mini Truck (Tata Ace)</h3>
+          <div class="fleet-hindi-badge">Small Mini Truck &middot; Up to 750 kg</div>
+          <p class="spec">Carries up to 750 kg. Best for small boxes, vegetables, retail store goods, and furniture.</p>
+          <span class="fleet-pill">Easy to find on highways</span>
+        </div>
+        <a href="register.html?role=customer" class="btn btn-outline btn-block btn-sm">Book Mini Truck</a>
+      </div>
+
+      <div class="fleet-card">
+        <div>
+          <svg class="fleet-glyph" viewBox="0 0 48 48"><rect x="3" y="16" width="28" height="16" rx="2" fill="#F5B700"/><rect x="31" y="20" width="12" height="12" rx="1.5" fill="#111827"/><circle cx="12" cy="34" r="4.2" fill="#111827"/><circle cx="35" cy="34" r="4.2" fill="#111827"/></svg>
+          <h3>Pickup 1.5T</h3>
+          <div class="fleet-hindi-badge">Pickup Truck &middot; Up to 1.5 Tons</div>
+          <p class="spec">Carries up to 1,500 kg (1.5 tons). Best for wholesale cartons, machinery parts, home appliances.</p>
+          <span class="fleet-pill">Express city-to-city</span>
+        </div>
+        <a href="register.html?role=customer" class="btn btn-outline btn-block btn-sm">Book Pickup</a>
+      </div>
+
+      <div class="fleet-card">
+        <div>
+          <svg class="fleet-glyph" viewBox="0 0 48 48"><rect x="2" y="14" width="30" height="18" rx="2" fill="#F5B700"/><rect x="32" y="18" width="13" height="14" rx="1.5" fill="#111827"/><circle cx="11" cy="35" r="4.5" fill="#111827"/><circle cx="37" cy="35" r="4.5" fill="#111827"/></svg>
+          <h3>Open Truck 9T</h3>
+          <div class="fleet-hindi-badge">Big 9-Ton Truck &middot; 8 to 9 Tons</div>
+          <p class="spec">Carries 8 to 9 tons. Best for agricultural produce, steel, cement, pipes, construction material.</p>
+          <span class="fleet-pill">Long distance national routes</span>
+        </div>
+        <a href="register.html?role=customer" class="btn btn-outline btn-block btn-sm">Book 9T Truck</a>
+      </div>
+
+      <div class="fleet-card">
+        <div>
+          <svg class="fleet-glyph" viewBox="0 0 48 48"><rect x="2" y="13" width="44" height="19" rx="2" fill="#F5B700"/><line x1="15" y1="13" x2="15" y2="32" stroke="#111827" stroke-width="1.5"/><line x1="28" y1="13" x2="28" y2="32" stroke="#111827" stroke-width="1.5"/><circle cx="12" cy="36" r="4.3" fill="#111827"/><circle cx="38" cy="36" r="4.3" fill="#111827"/></svg>
+          <h3>Container 20ft</h3>
+          <div class="fleet-hindi-badge">Closed Container &middot; 15 to 25 Tons</div>
+          <p class="spec">Carries 15 to 25 tons. Sealed, waterproof, best for electronics, pharmaceuticals, and FMCG.</p>
+          <span class="fleet-pill">Sealed &amp; GPS protected</span>
+        </div>
+        <a href="register.html?role=customer" class="btn btn-outline btn-block btn-sm">Book Container</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOBILE STICKY QUICK ACTION BAR ============ -->
+<div class="mobile-sticky-bar">
+  <a href="#book" class="mobile-sticky-btn btn-primary">
+    <span>📦 Book Space (Send Goods)</span>
+  </a>
+  <a href="track.html" class="mobile-sticky-btn btn-outline" style="border-color:var(--highway); color:#B45309;">
+    <span>📍 Live GPS</span>
+  </a>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container wrap">
+    <div>
+      <div class="brand">
+        <span class="mark"><span>LL</span></span>
+        <span class="brand-text" style="color:#FFFFFF;">Load<b style="color:var(--highway);">Link</b></span>
+      </div>
+      <p class="footer-tag">
+        “Don’t create another trip. Fill the empty one.” &mdash; Bharat's trusted network matching goods with empty returning trucks.
+      </p>
+    </div>
+    <div style="display:flex; gap:3rem; flex-wrap:wrap;">
+      <div class="footer-col">
+        <h4>Send Goods (Customers)</h4>
+        <a href="#book">Book Return Space</a>
+        <a href="track.html" style="color:var(--highway);">Live GPS Map</a>
+        <a href="register.html?role=customer">Customer Sign Up</a>
+        <a href="login.html">Customer Login</a>
+      </div>
+      <div class="footer-col">
+        <h4>Truck Drivers (Partners)</h4>
+        <a href="register.html?role=driver" style="color:var(--highway);">Driver Registration</a>
+        <a href="login.html">Driver Login</a>
+        <a href="#captain">Earnings Calculator</a>
+        <a href="track.html">Highway Route Pass</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support &amp; Safety</h4>
+        <a href="#safety">Trust &amp; OTP Security</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="login.html">Manager Portal</a>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <div>&copy; 2026 LOADLINK LOGISTICS PVT LTD &middot; All Rights Reserved.</div>
+    <div>24x7 Road Support &middot; Emergency Toll Helpline: 1033</div>
+  </div>
+</footer>
+
+<!-- ============ DIGITAL TRIP PASS & RECEIPT MODAL ============ -->
+<div class="modal-overlay" id="ewaybillModal" onclick="if(event.target===this)closeEwaybillModal()">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeEwaybillModal()" aria-label="Close">&times;</button>
+    <span class="ewb-badge">&#10003; Government Road Pass &amp; Bill</span>
+    <h3 style="font-family:var(--display); font-size:1.3rem; font-weight:800; margin-bottom:.2rem;">Digital Trip Pass &amp; Receipt</h3>
+    <p style="font-size:.82rem; color:var(--steel); margin-bottom:.5rem;">LoadLink Return Trip Pass &middot; Form GST EWB-01</p>
+
+    <div class="ewb-grid">
+      <div><span>Tracking ID (Shipment Number)</span><strong id="modalEwbId" style="font-family:var(--mono);">LL-WB-2026-8841</strong></div>
+      <div><span>Route (From &rarr; To)</span><strong id="modalCorridor">Vijayawada &#8594; Hyderabad</strong></div>
+      <div><span>Assigned Driver (Truck &amp; Driver)</span><strong id="modalCaptain">Ganesh Kale &middot; AP16 GK 7788</strong></div>
+      <div><span>Weight Booked (Load Weight)</span><strong id="modalPayload" style="color:#D97706;">250 kg load</strong></div>
+    </div>
+
+    <div class="qr-box">
+      <div class="qr-code">
+        <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#111827">
+          <rect x="2" y="2" width="6" height="6" fill="#000"/><rect x="3.5" y="3.5" width="3" height="3" fill="#FFF"/>
+          <rect x="16" y="2" width="6" height="6" fill="#000"/><rect x="17.5" y="3.5" width="3" height="3" fill="#FFF"/>
+          <rect x="2" y="16" width="6" height="6" fill="#000"/><rect x="3.5" y="17.5" width="3" height="3" fill="#FFF"/>
+          <rect x="10" y="2" width="2" height="4"/><rect x="10" y="8" width="4" height="2"/>
+          <rect x="14" y="12" width="4" height="4"/><rect x="10" y="14" width="2" height="6"/>
+          <rect x="18" y="10" width="4" height="2"/><rect x="2" y="10" width="4" height="2"/>
+          <rect x="18" y="18" width="4" height="4"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-size:.88rem; font-weight:700; color:var(--highway);">Toll Gate &amp; Police Fast-Pass</div>
+        <div style="font-size:.75rem; color:#D1D5DB; margin-top:.25rem;">Valid and scannable at toll plazas and transport checkpoints. No stop delays.</div>
+      </div>
+    </div>
+
+    <div class="otp-strip">
+      <div>
+        <strong>Mobile OTP Delivery Protection</strong><br>
+        <span style="font-size:.75rem;">This 4-digit code is sent to the receiver. Handover completes only when entered.</span>
+      </div>
+      <span class="otp-code">8824</span>
+    </div>
+
+    <div style="display:flex; gap:.8rem;">
+      <button type="button" class="btn btn-outline btn-block btn-sm" onclick="closeEwaybillModal()">Close Preview</button>
+      <a href="register.html?role=customer" class="btn btn-primary btn-block btn-sm">Proceed to Book</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DYNAMIC INTERACTIVE ENGINE SCRIPT ============ -->
+<script>
+  // City Distance Matrix (in km, approximate driving time)
+  const CITY_DISTANCE_MATRIX = {
+    'Vijayawada, AP': { 'Hyderabad, TS': { km: 275, hrs: '5.5 hrs', trucks: 14 }, 'Mumbai, MH': { km: 980, hrs: '18 hrs', trucks: 6 }, 'Pune, MH': { km: 860, hrs: '16 hrs', trucks: 8 }, 'Jaipur, RJ': { km: 1450, hrs: '26 hrs', trucks: 4 }, 'Chennai, TN': { km: 450, hrs: '8 hrs', trucks: 12 } },
+    'Pune, MH': { 'Hyderabad, TS': { km: 560, hrs: '10 hrs', trucks: 10 }, 'Mumbai, MH': { km: 150, hrs: '3 hrs', trucks: 22 }, 'Pune, MH': { km: 0, hrs: '0 hrs', trucks: 0 }, 'Jaipur, RJ': { km: 1150, hrs: '21 hrs', trucks: 7 }, 'Chennai, TN': { km: 1180, hrs: '22 hrs', trucks: 5 } },
+    'Nagpur, MH': { 'Hyderabad, TS': { km: 500, hrs: '9 hrs', trucks: 9 }, 'Mumbai, MH': { km: 710, hrs: '11 hrs', trucks: 16 }, 'Pune, MH': { km: 710, hrs: '12 hrs', trucks: 8 }, 'Jaipur, RJ': { km: 920, hrs: '17 hrs', trucks: 6 }, 'Chennai, TN': { km: 1100, hrs: '20 hrs', trucks: 5 } },
+    'Surat, GJ': { 'Hyderabad, TS': { km: 920, hrs: '17 hrs', trucks: 7 }, 'Mumbai, MH': { km: 280, hrs: '5 hrs', trucks: 20 }, 'Pune, MH': { km: 380, hrs: '7.5 hrs', trucks: 11 }, 'Jaipur, RJ': { km: 890, hrs: '15 hrs', trucks: 9 }, 'Chennai, TN': { km: 1500, hrs: '27 hrs', trucks: 3 } },
+    'Delhi, DL': { 'Hyderabad, TS': { km: 1580, hrs: '28 hrs', trucks: 8 }, 'Mumbai, MH': { km: 1420, hrs: '24 hrs', trucks: 18 }, 'Pune, MH': { km: 1440, hrs: '25 hrs', trucks: 12 }, 'Jaipur, RJ': { km: 260, hrs: '4.5 hrs', trucks: 18 }, 'Chennai, TN': { km: 2180, hrs: '36 hrs', trucks: 5 } },
+    'Bengaluru, KA': { 'Hyderabad, TS': { km: 570, hrs: '10 hrs', trucks: 16 }, 'Mumbai, MH': { km: 980, hrs: '17 hrs', trucks: 14 }, 'Pune, MH': { km: 840, hrs: '14 hrs', trucks: 12 }, 'Jaipur, RJ': { km: 1950, hrs: '34 hrs', trucks: 4 }, 'Chennai, TN': { km: 345, hrs: '6 hrs', trucks: 15 } }
+  };
+
+  const VEHICLE_SPECS = {
+    'Tata Ace - 0.75T': { maxKg: 750, minKg: 50, step: 25, defaultKg: 250, basePerKm: 14, presets: [100, 250, 500, 750] },
+    'Pickup - 1.5T':    { maxKg: 1500, minKg: 100, step: 50, defaultKg: 600, basePerKm: 20, presets: [300, 600, 1000, 1500] },
+    'Open Truck - 9T':  { maxKg: 9000, minKg: 500, step: 250, defaultKg: 3500, basePerKm: 38, presets: [1000, 3000, 6000, 9000] },
+    'Container - 20ft': { maxKg: 20000, minKg: 1000, step: 500, defaultKg: 8000, basePerKm: 65, presets: [2000, 5000, 10000, 20000] }
+  };
+
+  let currentVehicleType = 'Tata Ace - 0.75T';
+
+  function selectVehicleTab(btn, vehicleType, maxCap) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentVehicleType = vehicleType;
+    const select = document.getElementById('calcVehicle');
+    if (select) select.value = vehicleType;
+
+    const spec = VEHICLE_SPECS[vehicleType] || VEHICLE_SPECS['Tata Ace - 0.75T'];
+    const slider = document.getElementById('calcWeight');
+    if (slider) {
+      slider.min = spec.minKg;
+      slider.max = spec.maxKg;
+      slider.step = spec.step;
+      slider.value = spec.defaultKg;
+    }
+
+    const chipsContainer = document.getElementById('presetChips');
+    if (chipsContainer) {
+      chipsContainer.innerHTML = spec.presets.map(p => {
+        const label = p >= 1000 ? (p / 1000).toFixed(1).replace('.0', '') + 'T' : p + ' kg';
+        return `<button type="button" class="preset-btn" onclick="setWeightPreset(${p})">${label}</button>`;
+      }).join('');
+    }
+
+    updateCalc();
+  }
+
+  function setWeightPreset(val) {
+    const slider = document.getElementById('calcWeight');
+    if (slider) {
+      slider.value = val;
+      updateCalc();
+    }
+  }
+
+  function onRouteChanged() {
+    const orig = document.getElementById('calcOrigin').value;
+    const dest = document.getElementById('calcDest').value;
+    const origCity = orig.split(',')[0].trim();
+    const destCity = dest.split(',')[0].trim();
+
+    let distanceData = { km: 275, hrs: '5.5 hrs', trucks: 14 };
+    if (CITY_DISTANCE_MATRIX[orig] && CITY_DISTANCE_MATRIX[orig][dest]) {
+      distanceData = CITY_DISTANCE_MATRIX[orig][dest];
+    } else if (CITY_DISTANCE_MATRIX[dest] && CITY_DISTANCE_MATRIX[dest][orig]) {
+      distanceData = CITY_DISTANCE_MATRIX[dest][orig];
+    }
+
+    const kmEl = document.getElementById('dynamicKm');
+    const durEl = document.getElementById('dynamicDuration');
+    const trkEl = document.getElementById('dynamicTruckCount');
+    if (kmEl) kmEl.textContent = distanceData.km + ' km';
+    if (durEl) durEl.textContent = distanceData.hrs;
+    if (trkEl) trkEl.textContent = distanceData.trucks;
+
+    const heroName = document.getElementById('heroRouteName');
+    const heroOrig = document.getElementById('heroRouteOrigin');
+    const heroDest = document.getElementById('heroRouteDest');
+    if (heroName) heroName.textContent = `${origCity.toUpperCase()} → ${destCity.toUpperCase()} (${distanceData.km} KM)`;
+    if (heroOrig) heroOrig.textContent = origCity.toUpperCase();
+    if (heroDest) heroDest.textContent = destCity.toUpperCase();
+
+    updateCalc();
+  }
+
+  function updateCalc() {
+    const slider = document.getElementById('calcWeight');
+    const weight = slider ? Number(slider.value) : 250;
+    const weightUnit = weight >= 1000 ? (weight / 1000).toFixed(1).replace('.0', '') + 'T' : weight + ' kg';
+    const weightLabel = document.getElementById('calcWeightLabel');
+    if (weightLabel) weightLabel.textContent = weightUnit;
+
+    const orig = document.getElementById('calcOrigin') ? document.getElementById('calcOrigin').value : 'Vijayawada, AP';
+    const dest = document.getElementById('calcDest') ? document.getElementById('calcDest').value : 'Hyderabad, TS';
+    let km = 275;
+    if (CITY_DISTANCE_MATRIX[orig] && CITY_DISTANCE_MATRIX[orig][dest]) {
+      km = CITY_DISTANCE_MATRIX[orig][dest].km || 275;
+    }
+
+    const spec = VEHICLE_SPECS[currentVehicleType] || VEHICLE_SPECS['Tata Ace - 0.75T'];
+    const maxCapacity = spec.maxKg;
+
+    const weightFraction = Math.min(1, Math.max(0.12, weight / maxCapacity));
+    const baseTripCost = km * spec.basePerKm;
+    
+    const rf = Math.round((baseTripCost * (0.35 + weightFraction * 0.45)) / 50) * 50;
+    const trad = Math.round((baseTripCost * 1.15) / 50) * 50;
+    const save = Math.max(0, trad - rf);
+    const pct = Math.round((save / trad) * 100);
+
+    const tradEl = document.getElementById('calcTrad');
+    const rfEl = document.getElementById('calcRf');
+    const saveEl = document.getElementById('calcSave');
+    if (tradEl) tradEl.textContent = '₹' + trad.toLocaleString('en-IN');
+    if (rfEl) rfEl.textContent = '₹' + rf.toLocaleString('en-IN');
+    if (saveEl) saveEl.textContent = '₹' + save.toLocaleString('en-IN') + ' (' + pct + '% Saved)';
+
+    const utilPct = Math.min(96, Math.max(30, Math.round(30 + (weight / maxCapacity) * 60)));
+    const badge = document.getElementById('cargoUtilBadge');
+    if (badge) badge.textContent = utilPct + '% filled';
+
+    const cubeH = Math.min(52, Math.max(14, Math.round(14 + (weight / maxCapacity) * 36)));
+    const topPoly = document.getElementById('userCargoTop');
+    const leftPoly = document.getElementById('userCargoLeft');
+    const rightPoly = document.getElementById('userCargoRight');
+    const cargoLabel = document.getElementById('userCargoLabel');
+    if (topPoly && leftPoly && rightPoly) {
+      topPoly.setAttribute('points', `160,${145 - cubeH} 220,${115 - cubeH} 160,${85 - cubeH} 100,${115 - cubeH}`);
+      leftPoly.setAttribute('points', `100,${115 - cubeH} 160,${145 - cubeH} 160,145 100,115`);
+      rightPoly.setAttribute('points', `160,${145 - cubeH} 220,${115 - cubeH} 220,115 160,145`);
+      if (cargoLabel) {
+        cargoLabel.setAttribute('y', 115 - cubeH - 6);
+        cargoLabel.textContent = 'YOU ' + weightUnit.toUpperCase();
+      }
+    }
+
+    const co2Kg = Math.round(Math.max(20, (km * 0.35) * weightFraction));
+    const dieselL = Math.round(Math.max(8, (km * 0.12) * weightFraction));
+    const tollRs = Math.round(Math.max(120, (km * 1.1) * 0.35));
+    const esgCo2 = document.getElementById('esgCo2');
+    const esgDiesel = document.getElementById('esgDiesel');
+    const esgToll = document.getElementById('esgToll');
+    if (esgCo2) esgCo2.textContent = co2Kg >= 1000 ? (co2Kg / 1000).toFixed(1) + ' t' : co2Kg + ' kg';
+    if (esgDiesel) esgDiesel.textContent = dieselL >= 1000 ? (dieselL / 1000).toFixed(1) + ' kL' : dieselL + ' L';
+    if (esgToll) esgToll.textContent = '₹' + tollRs.toLocaleString('en-IN');
+
+    const origCity = orig.split(',')[0].trim();
+    const destCity = dest.split(',')[0].trim();
+    const modalCorridor = document.getElementById('modalCorridor');
+    if (modalCorridor) modalCorridor.textContent = origCity + ' → ' + destCity;
+    const modalPayload = document.getElementById('modalPayload');
+    if (modalPayload) modalPayload.textContent = weightUnit + ' load';
+  }
+
+  function openEwaybillModal() {
+    const modal = document.getElementById('ewaybillModal');
+    if (modal) modal.classList.add('active');
+  }
+  function closeEwaybillModal() {
+    const modal = document.getElementById('ewaybillModal');
+    if (modal) modal.classList.remove('active');
+  }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeEwaybillModal(); });
+
+  const burger = document.getElementById('hamburgerBtn');
+  const drawer = document.getElementById('mobileDrawer');
+  const overlay = document.getElementById('drawerOverlay');
+  const drawerClose = document.getElementById('drawerCloseBtn');
+
+  function openDrawer() {
+    if (drawer) drawer.classList.add('open');
+    if (overlay) overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    if (drawer) drawer.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  if (burger) burger.addEventListener('click', openDrawer);
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  document.querySelectorAll('.drawer-link').forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  function initCounters() {
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      const target = parseFloat(counter.getAttribute('data-target'));
+      const isDecimal = counter.getAttribute('data-decimal') === '1';
+      let count = 0;
+      const step = target / 50;
+      const timer = setInterval(() => {
+        count += step;
+        if (count >= target) {
+          count = target;
+          clearInterval(timer);
+        }
+        counter.textContent = isDecimal ? count.toFixed(1) : Math.round(count).toLocaleString('en-IN');
+      }, 30);
+    });
+  }
+
+  function initGreeting() {
+    const el = document.getElementById('greetingText');
+    if (!el) return;
+    const hour = new Date().getHours();
+    let timeGreeting = 'Good Morning';
+    if (hour >= 12 && hour < 17) timeGreeting = 'Good Afternoon';
+    else if (hour >= 17) timeGreeting = 'Good Evening';
+
+    const activeTrucks = Math.floor(34 + Math.random() * 11);
+    el.innerHTML = `${timeGreeting} &middot; <strong>${activeTrucks} returning trucks</strong> running on highways right now &middot; <span style="opacity:0.8;">Updated just now</span>`;
+  }
+
+  function refreshRadarFeed() {
+    const speeds = ['56 km/h', '61 km/h', '54 km/h', '64 km/h', '58 km/h'];
+    const randomSpeed = speeds[Math.floor(Math.random() * speeds.length)];
+    const speedEl = document.getElementById('radarSpeed');
+    if (speedEl) speedEl.textContent = randomSpeed;
+
+    const spaces = ['420 kg free', '450 kg free', '520 kg free', '380 kg free'];
+    const row1Space = document.getElementById('radarRow1Space');
+    if (row1Space) row1Space.textContent = spaces[Math.floor(Math.random() * spaces.length)];
+
+    const btn = document.querySelector('.radar-refresh-btn');
+    if (btn) {
+      btn.textContent = '✓ Updated';
+      setTimeout(() => { btn.textContent = '⟳ Refresh Live'; }, 1500);
+    }
+  }
+
+  (function () {
+    const track = document.getElementById('routePath');
+    const progress = document.getElementById('routeProgress');
+    const truck = document.getElementById('truckMarker');
+    if (!track || !progress || !truck) return;
+    const len = track.getTotalLength();
+    progress.style.strokeDasharray = len;
+    progress.style.strokeDashoffset = len;
+    truck.style.opacity = 0;
+
+    let start = null;
+    const duration = 1800;
+    function frame(ts) {
+      if (!start) start = ts;
+      const t = Math.min(1, (ts - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      progress.style.strokeDashoffset = len * (1 - eased);
+      const pt = track.getPointAtLength(len * eased);
+      truck.setAttribute('transform', `translate(${pt.x} ${pt.y})`);
+      truck.style.opacity = 1;
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      progress.style.strokeDashoffset = 0;
+      truck.setAttribute('transform', `translate(510 70)`);
+      truck.style.opacity = 1;
+    } else {
+      requestAnimationFrame(frame);
+    }
+  })();
+
+  const landingThemeBtn = document.getElementById('landingThemeToggle');
+  if (landingThemeBtn) {
+    function refreshThemeBtn() {
+      const cur = localStorage.getItem('loadlink_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      landingThemeBtn.innerHTML = cur === 'dark' ? '☀️ Light' : '🌙 Dark';
+    }
+    refreshThemeBtn();
+    landingThemeBtn.addEventListener('click', () => {
+      const cur = localStorage.getItem('loadlink_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('loadlink_theme', next);
+      document.documentElement.setAttribute('data-theme', next);
+      refreshThemeBtn();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initGreeting();
+    initCounters();
+    onRouteChanged();
+  });
+  initGreeting();
+  initCounters();
+  onRouteChanged();
+</script>
+</body>
+</html>

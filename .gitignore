@@ -1,0 +1,22 @@
+# Ignore backend (user requested frontend only)
+backend/
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & temp files
+*.log
+scratch/
+temp_*
+node_modules/

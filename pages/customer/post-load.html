@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post a load — LoadLink</title>
+<script>try{const t=localStorage.getItem('loadlink_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav class="topnav" id="topnav"></nav>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section-lbl">Navigation</div>
+    <a href="dashboard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="post-load.html" class="active">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Post a load
+    </a>
+    <a href="my-loads.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+      My loads
+    </a>
+    <a href="savings-impact.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Savings &amp; impact
+    </a>
+    <div class="sidebar-section-lbl">Tools</div>
+    <a href="../../track.html" target="_blank">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      Live GPS Radar
+    </a>
+  </aside>
+  <main class="main-content">
+    <span class="eyebrow-marker" style="margin-bottom:.8rem;">FREIGHT DISPATCH &middot; EMPTY CORRIDOR MATCH</span>
+    <h1 style="font-family:var(--display); font-weight:600; margin-top:.4rem;">Post a load</h1>
+    <p class="text-soft">Tell us what needs to move — we'll surface drivers already heading that way empty.</p>
+
+    <div class="panel container--narrow" style="margin-left:0;">
+      <!-- Quick Corridor Pre-fill Presets -->
+      <div style="margin-bottom:1.1rem; padding-bottom:.8rem; border-bottom:1px solid var(--line);">
+        <span class="text-soft" style="font-size:.78rem; font-weight:600; text-transform:uppercase; font-family:var(--mono); display:block; margin-bottom:.4rem;">⚡ Quick Pre-Fill Sample Corridors</span>
+        <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+          <button type="button" class="btn btn-outline btn-sm" id="presetLoad1" style="font-size:.78rem; padding:4px 9px;">🧅 Nashik ➔ Pune (8T Onions)</button>
+          <button type="button" class="btn btn-outline btn-sm" id="presetLoad2" style="font-size:.78rem; padding:4px 9px;">🏺 Vijayawada ➔ Hyd (250kg Crafts)</button>
+          <button type="button" class="btn btn-outline btn-sm" id="presetLoad3" style="font-size:.78rem; padding:4px 9px;">🧵 Surat ➔ Mumbai (4T Textiles)</button>
+        </div>
+      </div>
+      <form id="loadForm" novalidate>
+        <div class="field-row">
+          <div class="field" id="originField">
+            <label for="origin">Pickup city</label>
+            <input id="origin" placeholder="e.g. Nashik, MH">
+            <div class="field-error">Enter a pickup city.</div>
+          </div>
+          <div class="field" id="destinationField">
+            <label for="destination">Drop city</label>
+            <input id="destination" placeholder="e.g. Pune, MH">
+            <div class="field-error">Enter a drop city.</div>
+          </div>
+        </div>
+        <div class="field" id="materialField">
+          <label for="material">Material / cargo</label>
+          <input id="material" placeholder="e.g. Onion sacks (50kg)">
+          <div class="field-error">Describe what's being shipped.</div>
+        </div>
+        <div class="field-row">
+          <div class="field" id="weightTonsField">
+            <label for="weightTons">Weight</label>
+            <div class="flex-wrap" style="gap:.5em;">
+              <input type="number" min="0.1" step="0.1" id="weightTons" placeholder="e.g. 250" style="flex:1;">
+              <select id="unit" style="max-width:7em;">
+                <option value="kg">kg</option>
+                <option value="T">Tons</option>
+              </select>
+            </div>
+            <div class="field-error">Enter the load weight.</div>
+          </div>
+          <div class="field" id="pickupDateField">
+            <label for="pickupDate">Pickup date</label>
+            <input type="date" id="pickupDate">
+            <div class="field-error">Choose a pickup date.</div>
+          </div>
+        </div>
+
+        <!-- AI Dynamic Route & Fare Budget Assistant -->
+        <div class="panel mb-3" id="aiCustomerPricingCard" style="background:var(--asphalt-2); border:1px solid rgba(245,183,0,0.3); color:#fff; border-radius:var(--radius-m); padding:1rem 1.2rem;">
+          <div class="flex-between" style="align-items:center; margin-bottom:.5rem;">
+            <div style="display:flex; align-items:center; gap:.5rem;">
+              <span style="background:var(--highway); color:var(--asphalt); font-weight:700; font-size:.7rem; padding:2px 6px; border-radius:4px; font-family:var(--mono);">AI ENGINE</span>
+              <strong style="font-family:var(--display); font-size:.95rem;">Backhaul Fair Fare & Savings Calculator</strong>
+            </div>
+            <button type="button" class="btn btn-sm" id="applyAiBudgetBtn" style="background:var(--highway); color:var(--asphalt); font-weight:600; font-size:.8rem; border:none; padding:4px 10px; border-radius:6px; cursor:pointer;">
+              ⚡ Auto-Fill AI Fair Budget
+            </button>
+          </div>
+          <p class="text-soft" style="color:#C9D3CD; font-size:.82rem; margin-bottom:.6rem;">
+            AI matches your shipment with existing backhaul trucks already driving this route, unlocking ~28% discount vs dedicated booking.
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:.75rem; background:rgba(255,255,255,0.05); padding:.75rem; border-radius:8px;">
+            <div>
+              <span style="font-size:.75rem; color:#8A93A0; display:block;">Corridor Distance</span>
+              <strong id="aiCustDistanceVal" style="font-family:var(--mono); color:var(--highway); font-size:.95rem;">— km</strong>
+            </div>
+            <div>
+              <span style="font-size:.75rem; color:#8A93A0; display:block;">Regular Market Rate</span>
+              <strong id="aiCustStandardVal" style="font-family:var(--mono); color:#8A93A0; text-decoration:line-through; font-size:.95rem;">₹—</strong>
+            </div>
+            <div>
+              <span style="font-size:.75rem; color:#8A93A0; display:block;">Backhaul Savings (28%)</span>
+              <strong id="aiCustSavingsVal" style="font-family:var(--mono); color:#10B981; font-size:.95rem;">Save ₹—</strong>
+            </div>
+            <div>
+              <span style="font-size:.75rem; color:#8A93A0; display:block;">AI Recommended Budget</span>
+              <strong id="aiCustBudgetVal" style="font-family:var(--mono); color:var(--highway); font-size:1.05rem;">₹—</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="field" id="budgetField">
+          <label for="budget">Your budget (₹)</label>
+          <input type="number" min="1" id="budget" placeholder="Auto-computed by AI or custom">
+          <div class="field-error">Enter a budget amount.</div>
+          <div class="hint">Backhaul rates typically run 20–35% below forward freight for the same route.</div>
+        </div>
+
+        <!-- Cargo Goods Photo + Toll/e-Waybill Clearance Photos (Mandatory for Checkposts) -->
+        <div class="field-row mb-3">
+          <div class="field" id="goodsPhotoField" style="flex:1;">
+            <label style="display:flex; justify-content:space-between; align-items:center;">
+              <span>1. Cargo Goods Photo <strong style="color:var(--milestone);">(Required)</strong></span>
+              <button type="button" id="demoGoodsPhotoBtn" style="background:none; border:none; color:var(--highway); cursor:pointer; font-size:.78rem; font-weight:600; text-decoration:underline;">
+                📷 Sample
+              </button>
+            </label>
+            <div class="upload-box" id="goodsPhotoBox" style="border:2px dashed var(--concrete-2); padding:1rem; text-align:center; border-radius:var(--radius-m); cursor:pointer; background:var(--paper);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--steel);"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <div id="goodsPhotoText" style="font-size:.82rem; color:var(--steel); margin-top:.2rem;">Upload photo of packaged cargo</div>
+            </div>
+            <input type="file" id="goodsPhotoInput" accept="image/*" style="display:none;">
+            <div id="goodsPhotoPreview" style="display:none; margin-top:.5rem; align-items:center; gap:.5rem; padding:.5rem; background:rgba(46,125,91,0.08); border:1px solid var(--signal); border-radius:var(--radius-s);">
+              <img id="goodsPhotoImg" src="" style="width:55px; height:40px; object-fit:cover; border-radius:4px;">
+              <span class="badge badge--ok" style="font-size:.7rem;">✓ Goods Attached</span>
+              <button type="button" id="removeGoodsPhotoBtn" style="margin-left:auto; background:none; border:none; color:var(--milestone); cursor:pointer; font-size:.8rem;">✕</button>
+            </div>
+          </div>
+
+          <div class="field" id="billPhotoField" style="flex:1;">
+            <label style="display:flex; justify-content:space-between; align-items:center;">
+              <span>2. Invoice / Toll Document <strong style="color:var(--milestone);">(Checkpost)</strong></span>
+              <button type="button" id="demoBillPhotoBtn" style="background:none; border:none; color:var(--highway); cursor:pointer; font-size:.78rem; font-weight:600; text-decoration:underline;">
+                📄 Sample
+              </button>
+            </label>
+            <div class="upload-box" id="billPhotoBox" style="border:2px dashed var(--concrete-2); padding:1rem; text-align:center; border-radius:var(--radius-m); cursor:pointer; background:var(--paper);">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="color:var(--steel);"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <div id="billPhotoText" style="font-size:.82rem; color:var(--steel); margin-top:.2rem;">Upload e-Waybill / invoice / toll pass</div>
+            </div>
+            <input type="file" id="billPhotoInput" accept="image/*,.pdf" style="display:none;">
+            <div id="billPhotoPreview" style="display:none; margin-top:.5rem; align-items:center; gap:.5rem; padding:.5rem; background:rgba(46,125,91,0.08); border:1px solid var(--signal); border-radius:var(--radius-s);">
+              <img id="billPhotoImg" src="" style="width:55px; height:40px; object-fit:cover; border-radius:4px;">
+              <span class="badge badge--ok" style="font-size:.7rem;">✓ Document Attached</span>
+              <button type="button" id="removeBillPhotoBtn" style="margin-left:auto; background:none; border:none; color:var(--milestone); cursor:pointer; font-size:.8rem;">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="notes">Notes for the driver (optional)</label>
+          <textarea id="notes" rows="3" placeholder="Loading dock access, handling instructions, contact person..."></textarea>
+        </div>
+        <div class="flex-wrap mt-3">
+          <button type="submit" class="btn btn-primary" data-mode="publish">Post load</button>
+          <button type="submit" class="btn btn-outline" data-mode="draft">Save as draft</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+<script src="../../js/apiClient.js"></script>
+<script src="../../js/mockApi.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/main.js"></script>
+<script src="post-load.js"></script>
+</body>
+</html>

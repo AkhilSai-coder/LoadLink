@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — LoadLink</title>
+<script>try{const t=localStorage.getItem('loadlink_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav class="topnav" id="topnav"></nav>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section-lbl">Navigation</div>
+    <a href="dashboard.html" class="active">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="post-capacity.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Post capacity
+    </a>
+    <a href="matched-loads.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      Matched loads
+    </a>
+    <a href="earnings.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Earnings
+    </a>
+    <div class="sidebar-section-lbl">Tools</div>
+    <a href="../../track.html" target="_blank">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      Live GPS Radar
+    </a>
+  </aside>
+  <main class="main-content">
+    <div class="dash-hero-glass">
+      <div class="dash-hero-content">
+        <div class="dash-hero-meta">
+          <span class="dash-role-badge">👑 LoadLink Captain Fleet Hub</span>
+          <span class="dash-status-pill"><span class="dash-pulse-dot"></span> Backhaul Optimizer Active</span>
+        </div>
+        <h1 id="greeting">Dashboard</h1>
+        <p>Turn empty return trips into high-yield freight income. Zero idle highway runs.</p>
+      </div>
+      <div class="dash-hero-actions">
+        <a class="btn btn-primary" href="post-capacity.html">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Post Capacity
+        </a>
+      </div>
+    </div>
+
+    <div id="kycBanner"></div>
+    <div id="tripStory"></div>
+
+    <div class="stat-glass-grid mt-3">
+      <div class="stat-glass-card accent-cyan">
+        <div class="stat-glass-header">
+          <span class="stat-glass-lbl">Open Capacity</span>
+          <div class="stat-glass-icon icon-cyan">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+        </div>
+        <div class="stat-glass-val" id="statOpen">0</div>
+        <div class="stat-glass-footer">
+          <span class="trend-dot"></span>
+          <span>Ready for return cargo</span>
+        </div>
+      </div>
+
+      <div class="stat-glass-card accent-emerald">
+        <div class="stat-glass-header">
+          <span class="stat-glass-lbl">Matched Trips</span>
+          <div class="stat-glass-icon icon-emerald">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </div>
+        </div>
+        <div class="stat-glass-val" id="statMatched">0</div>
+        <div class="stat-glass-footer">
+          <span class="trend-dot"></span>
+          <span>Loads booked & agreed</span>
+        </div>
+      </div>
+
+      <div class="stat-glass-card accent-amber">
+        <div class="stat-glass-header">
+          <span class="stat-glass-lbl">In Transit</span>
+          <div class="stat-glass-icon icon-amber">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+          </div>
+        </div>
+        <div class="stat-glass-val" id="statTransit">0</div>
+        <div class="stat-glass-footer">
+          <span class="trend-dot" style="background:#F59E0B;"></span>
+          <span>En-route to destination</span>
+        </div>
+      </div>
+
+      <div class="stat-glass-card accent-violet">
+        <div class="stat-glass-header">
+          <span class="stat-glass-lbl">Total Earned</span>
+          <div class="stat-glass-icon icon-violet">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+        </div>
+        <div class="stat-glass-val" id="statEarned">₹0</div>
+        <div class="stat-glass-footer">
+          <span class="trend-dot" style="background:#8B5CF6;"></span>
+          <span>Escrow direct payout</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-panel">
+      <div class="glass-panel-head">
+        <div class="glass-panel-title">
+          <svg width="22" height="22" fill="none" stroke="#00E599" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <h2>My Upcoming Road Trips</h2>
+        </div>
+        <a class="btn btn-outline btn-sm" href="post-capacity.html">+ Post capacity</a>
+      </div>
+      <div id="capacityList"></div>
+    </div>
+  </main>
+</div>
+<script src="../../js/apiClient.js"></script>
+<script src="../../js/mockApi.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/main.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

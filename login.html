@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in — LoadLink</title>
+<script>
+  try {
+    const t = localStorage.getItem('loadlink_theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+</script>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .auth-top-actions{display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;}
+</style>
+</head>
+<body>
+<div class="auth-shell">
+  <div class="auth-card" style="max-width:480px;">
+    <div class="auth-top-actions">
+      <a class="brand" href="index.html">
+        <span class="mark"><span>LL</span></span> <span class="brand-text">Load<b>Link</b></span>
+      </a>
+      <div style="display:flex; align-items:center; gap:.5rem;">
+        <span class="rf-conn-status local" id="authConnStatus" title="System Connection Status">
+          <span class="rf-conn-dot"></span> <span id="authConnText">Local Mode</span>
+        </span>
+        <button class="theme-toggle-btn" id="authThemeToggle" type="button" aria-label="Toggle Theme">
+          🌙 Dark
+        </button>
+      </div>
+    </div>
+    <h2 style="font-family:var(--display); font-weight:600; margin-top:.2rem;">Log in to LoadLink</h2>
+    <p class="text-soft">“Don’t create another trip. Fill the empty one.” &mdash; Sign in to send goods or pick up loads on your return trip.</p>
+
+    <!-- 1-Click Quick Demo Login Toolbar -->
+    <div class="ll-demo-toolbar">
+      <div class="ll-demo-title">
+        <span>⚡ 1-Click Quick Demo Login</span>
+        <span style="color:var(--highway); font-size:.75rem; font-weight:700; font-family:var(--mono);">Instant Access</span>
+      </div>
+      <div class="ll-demo-grid">
+        <button type="button" class="ll-demo-btn" onclick="quickLogin('admin@loadlink.in', 'admin123')">
+          <strong>👑 Admin 1</strong>
+          <span>Rajesh Sharma</span>
+          <span class="badge-role badge-admin" style="background:var(--asphalt); color:var(--highway); border:1px solid rgba(245,183,0,.35);">Manager</span>
+        </button>
+        <button type="button" class="ll-demo-btn" onclick="quickLogin('ops@loadlink.in', 'admin123')">
+          <strong>🛡️ Admin 2</strong>
+          <span>Ananya Verma</span>
+          <span class="badge-role badge-admin" style="background:var(--asphalt); color:var(--highway); border:1px solid rgba(245,183,0,.35);">Trip Ops</span>
+        </button>
+        <button type="button" class="ll-demo-btn" onclick="quickLogin('priya@nairtextiles.in', 'demo1234')">
+          <strong>📦 Customer</strong>
+          <span>Priya Nair</span>
+          <span class="badge-role badge-customer" style="background:var(--signal-soft); color:var(--signal); border:1px solid rgba(46,125,91,.3);">Goods Sender</span>
+        </button>
+        <button type="button" class="ll-demo-btn" onclick="quickLogin('ganesh@example.com', 'demo1234')">
+          <strong>🚚 Driver</strong>
+          <span>Ganesh Kale</span>
+          <span class="badge-role badge-driver" style="background:rgba(245,183,0,.15); color:var(--highway-dim); border:1px solid rgba(245,183,0,.35);">Tata Ace</span>
+        </button>
+      </div>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="field" id="emailField">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email" placeholder="you@company.com">
+        <div class="field-error">Enter a valid email address.</div>
+      </div>
+      <div class="field" id="passwordField">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="current-password" placeholder="••••••••">
+        <div class="field-error">Enter your password.</div>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit" id="loginSubmitBtn">Log in</button>
+    </form>
+    <p class="text-soft mt-3" style="text-align:center; font-size:.85rem;">New to LoadLink? <a href="register.html">Create an account</a></p>
+  </div>
+</div>
+<script src="js/apiClient.js"></script>
+<script src="js/mockApi.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

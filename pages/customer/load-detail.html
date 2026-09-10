@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Load details — LoadLink</title>
+<script>try{const t=localStorage.getItem('loadlink_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav class="topnav" id="topnav"></nav>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section-lbl">Navigation</div>
+    <a href="dashboard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="post-load.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Post a load
+    </a>
+    <a href="my-loads.html" class="active">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+      My loads
+    </a>
+    <a href="savings-impact.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Savings &amp; impact
+    </a>
+    <div class="sidebar-section-lbl">Tools</div>
+    <a href="../../track.html" target="_blank">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      Live GPS Radar
+    </a>
+  </aside>
+  <main class="main-content">
+    <a href="my-loads.html" class="text-soft" style="display:inline-flex; align-items:center; gap:.4em; font-weight:600; font-size:.88rem; margin-bottom:.8rem;">&larr; Back to my loads</a>
+    <span class="eyebrow-marker" style="display:block; margin-bottom:.8rem; max-width:max-content;">CONSIGNMENT DISPATCH &middot; MATCH TELEMETRICS</span>
+    <div id="loadHead" class="mt-2"></div>
+    <div id="loadActions" class="flex-wrap mt-2"></div>
+
+    <!-- CORRIDOR MAP & DETOUR TELEMETRICS SECTION -->
+    <div id="loadRouteSection" class="mt-4"></div>
+
+    <div id="matchSection" class="mt-4"></div>
+
+    <div id="tripSection" class="mt-4"></div>
+  </main>
+</div>
+<script src="../../js/apiClient.js"></script>
+<script src="../../js/mockApi.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/main.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="load-detail.js"></script>
+</body>
+</html>

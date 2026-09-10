@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — LoadLink</title>
+<script>try{const t=localStorage.getItem('loadlink_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+<nav class="topnav" id="topnav"></nav>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section-lbl">Navigation</div>
+    <a href="dashboard.html" class="active">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="post-load.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      Send Goods
+    </a>
+    <a href="my-loads.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+      My Bookings
+    </a>
+    <a href="savings-impact.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Money Saved
+    </a>
+    <div class="sidebar-section-lbl">Tools</div>
+    <a href="../../track.html" target="_blank">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      Live GPS Map
+    </a>
+  </aside>
+  <main class="main-content">
+    <div class="dash-hero-glass">
+      <div class="dash-hero-content">
+        <div class="dash-hero-meta">
+          <span class="dash-role-badge">Customer Account (Goods Sender)</span>
+          <span class="dash-status-pill"><span class="dash-pulse-dot"></span> System Active</span>
+        </div>
+        <h1 id="greeting">Dashboard</h1>
+        <p>Send your goods easily, find empty trucks returning on your route, and track your delivery.</p>
+      </div>
+      <div class="dash-hero-actions">
+        <a class="btn btn-primary" href="post-load.html">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Send Goods
+        </a>
+      </div>
+    </div>
+
+    <div class="stat-glass-grid">
+      <div class="stat-glass-card accent-cyan">
+        <div class="stat-glass-header">
+          <span class="stat-glass-lbl">Waiting for Truck</span>
+          <div class="stat-glass-icon icon-cyan">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+        </div>
+        <div class="stat-glass-val" id="statOpen">0</div>
+        <div class="stat-glass-footer">
+          <span class="trend-dot"></span>
+          <span>Looking for a driver</span>
+        </div>
+      </div>
+
+      <div class="stat-glass-card accent-emerald">
+        <div class="stat-glass-header">
+          <span class="stat-glass-lbl">Truck Booked</span>
+          <div class="stat-glass-icon icon-emerald">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </div>
+        </div>
+        <div class="stat-glass-val" id="statMatched">0</div>
+        <div class="stat-glass-footer">
+          <span class="trend-dot"></span>
+          <span>Driver confirmed</span>
+        </div>
+      </div>
+
+      <div class="stat-glass-card accent-amber">
+        <div class="stat-glass-header">
+          <span class="stat-glass-lbl">On the Road</span>
+          <div class="stat-glass-icon icon-amber">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+        </div>
+        <div class="stat-glass-val" id="statTransit">0</div>
+        <div class="stat-glass-footer">
+          <span class="trend-dot" style="background:#F59E0B;"></span>
+          <span>Truck is moving</span>
+        </div>
+      </div>
+
+      <div class="stat-glass-card accent-violet">
+        <div class="stat-glass-header">
+          <span class="stat-glass-lbl">Delivered</span>
+          <div class="stat-glass-icon icon-violet">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </div>
+        </div>
+        <div class="stat-glass-val" id="statDelivered">0</div>
+        <div class="stat-glass-footer">
+          <span class="trend-dot" style="background:#8B5CF6;"></span>
+          <span>OTP verified at delivery</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-panel">
+      <div class="glass-panel-head">
+        <div class="glass-panel-title">
+          <svg width="22" height="22" fill="none" stroke="#00D2FF" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <h2>Your Recent Bookings</h2>
+        </div>
+        <a class="btn btn-outline btn-sm" href="my-loads.html">View all bookings →</a>
+      </div>
+      <div id="recentLoads"></div>
+    </div>
+  </main>
+</div>
+<script src="../../js/apiClient.js"></script>
+<script src="../../js/mockApi.js"></script>
+<script src="../../js/auth.js"></script>
+<script src="../../js/main.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>
