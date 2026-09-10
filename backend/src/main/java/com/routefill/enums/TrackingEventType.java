@@ -1,0 +1,14 @@
+package com.routefill.enums;
+
+public enum TrackingEventType {
+    BOOKING_REQUESTED,
+    BOOKING_ACCEPTED,
+    BOOKING_REJECTED,
+    BOOKING_CANCELLED,
+    DIGITAL_RECORD_GENERATED,
+    PICKUP_CONFIRMED,
+    IN_TRANSIT,
+    ARRIVED,
+    DELIVERED,
+    POD_GENERATED
+}

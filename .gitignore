@@ -1,14 +1,18 @@
-# Ignore backend (user requested frontend only)
-backend/
+# Java / Maven build output
+backend/target/
+target/
+*.class
 
 # IDE & Editor files
 .idea/
 .vscode/
+backend/.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.iml
 
 # OS files
 .DS_Store
